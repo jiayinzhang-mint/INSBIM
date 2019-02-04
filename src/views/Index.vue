@@ -52,10 +52,10 @@
       </v-list>
     </v-navigation-drawer>
     <v-toolbar app absolute class="transparent" flat>
-      <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-side-icon class="hidden-lg-and-up" @click="drawer = !drawer"></v-toolbar-side-icon>
       <span class="title font-weight-bold ml-1 mr-5">
-        INSBIM |
-        <span class="dim-subtitle">{{name}}</span>
+        INSBIM 
+        <span class="dim-subtitle">| {{name}}</span>
       </span>
       <v-spacer></v-spacer>
       <v-text-field
@@ -94,7 +94,7 @@ export default {
         {
           icon: "inbox",
           text: "收件箱",
-          route: ""
+          route: "/inbox"
         },
         { heading: "数据" },
         {
@@ -111,14 +111,14 @@ export default {
         {
           icon: "settings",
           text: "用户设置",
-          route: ""
+          route: "/user"
         }
       ],
       route: this.$route.name
     };
   },
   watch: {
-    $route(to, from) {
+    $route() {
       this.name = this.$route.name;
     }
   },
