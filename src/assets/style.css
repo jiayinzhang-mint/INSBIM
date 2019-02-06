@@ -3,11 +3,16 @@
   font-weight: 600
 }
 
+.dim-title {
+  font-size: 20px;
+  font-weight: 600
+}
+
 .dim-subtitle {
   font-weight: 400;
-  color: rgb(87, 87, 87)
+  color: rgb(168, 168, 168)
 }
 
 .v-card {
-  border-radius: 7px
+  border-radius: 5px
 }

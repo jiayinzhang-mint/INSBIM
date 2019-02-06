@@ -24,6 +24,11 @@ export default new Router({
           component: () => import("./views/Inbox")
         },
         {
+          path: "/building",
+          name: "楼宇管理",
+          component: () => import("./views/Building")
+        },
+        {
           path: "/device",
           name: "设备管理",
           component: () => import("./views/Device"),
@@ -31,28 +36,28 @@ export default new Router({
             {
               path: "/device/waterpressure",
               name: "水压传感器",
-              component: () => import("./components/device/WaterPressure"),
+              component: () => import("./components/device/WaterPressure")
             },
             {
               path: "/device/cap",
               name: "开盖传感器",
-              component: () => import("./components/device/Cap"),
+              component: () => import("./components/device/Cap")
             },
             {
               path: "/device/waterquality",
               name: "水质传感器",
-              component: () => import("./components/device/WaterQuality"),
+              component: () => import("./components/device/WaterQuality")
             },
             {
               path: "/device/temperature",
               name: "温度感应",
-              component: () => import("./components/device/Temperature"),
+              component: () => import("./components/device/Temperature")
             },
             {
               path: "/device/smoke",
               name: "烟雾感应器",
-              component: () => import("./components/device/Smoke"),
-            },
+              component: () => import("./components/device/Smoke")
+            }
           ]
         },
         {
@@ -63,13 +68,13 @@ export default new Router({
             {
               path: "/user/common",
               name: "通用设置",
-              component: () => import("./components/user/Common"),
+              component: () => import("./components/user/Common")
             },
             {
               path: "/user/security",
               name: "安全设置",
-              component: () => import("./components/user/Security"),
-            },
+              component: () => import("./components/user/Security")
+            }
           ]
         }
       ]

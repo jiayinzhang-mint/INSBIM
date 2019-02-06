@@ -4,10 +4,12 @@ import "../assets/style.css";
 import colors from "vuetify/es5/util/colors";
 import "vuetify/src/stylus/app.styl";
 import zhHans from "vuetify/es5/locale/zh-Hans";
+import "./confirm-dialog/index";
+import "./snackbar/index";
 
 Vue.use(Vuetify, {
   theme: {
-    primary: colors.deepOrange.lighten1,
+    primary: colors.indigo.lighten3,
     secondary: "#424242",
     accent: "#82B1FF",
     error: "#FF5252",

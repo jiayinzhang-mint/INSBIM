@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app dark>
     <v-navigation-drawer v-model="drawer" fixed app>
       <v-list>
         <v-list-tile avatar class="pt-3">
@@ -54,7 +54,7 @@
     <v-toolbar app absolute class="transparent" flat>
       <v-toolbar-side-icon class="hidden-lg-and-up" @click="drawer = !drawer"></v-toolbar-side-icon>
       <span class="title font-weight-bold ml-1 mr-5">
-        INSBIM 
+        INSBIM
         <span class="dim-subtitle">| {{name}}</span>
       </span>
       <v-spacer></v-spacer>
@@ -103,6 +103,11 @@ export default {
           route: ""
         },
         { heading: "系统" },
+        {
+          icon: "domain",
+          text: "楼宇管理",
+          route: "/building"
+        },
         {
           icon: "dns",
           text: "设备管理",
