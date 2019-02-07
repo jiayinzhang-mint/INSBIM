@@ -11,7 +11,7 @@
           <v-list-tile-content>
             <v-list-tile-title class="subheading">
               早上好,
-              <span class="font-weight-bold">MINT</span>&nbsp;
+              <span class="font-weight-bold text-uppercase">{{userInfo.username}}</span>&nbsp;
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
@@ -73,6 +73,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
@@ -140,6 +142,11 @@ export default {
     $route() {
       this.name = this.$route.name;
     }
+  },
+  computed: {
+    ...mapGetters({
+      userInfo: "user/userInfo"
+    })
   },
   mounted() {
     this.name = this.$route.name;

@@ -3,7 +3,7 @@
     <v-content>
       <v-container fluid fill-height>
         <v-layout align-center justify-center>
-          <v-flex sm12 md8 lg6>
+          <v-flex sm12 md8 xl6>
             <v-card class="elevation-12">
               <v-layout row wrap fill-height>
                 <v-flex md6 class="hidden-sm-and-down">

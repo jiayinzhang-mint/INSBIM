@@ -1,4 +1,5 @@
 import axios from "axios";
+import store from "../store/store";
 
 class basicService {
   static async getData(rsp) {
@@ -10,12 +11,13 @@ class basicService {
 
   static async getRequest(url, params) {
     try {
-      var rsp = await axios.post(url, { params: params });
+      console.log(params);
+      var rsp = await axios.get(url, { params: params });
     } catch (err) {
       return err;
     }
     let json = rsp.data;
-    let msg = JSON.stringify({ url: url, params: params, rsp: json });
+    let msg = { url: url, params: params, rsp: json };
     console.log(msg);
     return this.getData(rsp);
   }
@@ -27,7 +29,7 @@ class basicService {
       return await this.getData(err);
     }
     let json = rsp.data;
-    let msg = JSON.stringify({ url: url, params: params, rsp: json });
+    let msg = { url: url, params: params, rsp: json };
     console.log(msg);
     return await this.getData(rsp);
   }
@@ -39,7 +41,7 @@ class basicService {
       return err;
     }
     let json = rsp.data;
-    let msg = JSON.stringify({ url: url, params: params, rsp: json });
+    let msg = { url: url, params: params, rsp: json };
     console.log(msg);
     return this.getData(rsp);
   }
@@ -51,7 +53,7 @@ class basicService {
       return err;
     }
     let json = rsp.data;
-    let msg = JSON.stringify({ url: url, params: params, rsp: json });
+    let msg = { url: url, params: params, rsp: json };
     console.log(msg);
     return this.getData(rsp);
   }
