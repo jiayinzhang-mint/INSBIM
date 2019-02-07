@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app>
     <v-navigation-drawer v-model="drawer" fixed app>
       <v-list>
         <v-list-tile avatar class="pt-3">
@@ -58,17 +58,11 @@
         <span class="dim-subtitle">| {{name}}</span>
       </span>
       <v-spacer></v-spacer>
-      <v-text-field
-        flat
-        hide-details
-        solo-inverted
-        prepend-inner-icon="search"
-        label="搜索"
-        style="max-width:400px"
-        class="hidden-sm-and-down"
-      ></v-text-field>
       <v-btn icon class="ml-3">
         <v-icon>notifications</v-icon>
+      </v-btn>
+      <v-btn icon>
+        <v-icon>help_outline</v-icon>
       </v-btn>
     </v-toolbar>
 
@@ -96,13 +90,28 @@ export default {
           text: "收件箱",
           route: "/inbox"
         },
-        { heading: "数据" },
+        { heading: "运行" },
+        {
+          icon: "3d_rotation",
+          text: "3D 概览",
+          route: ""
+        },
         {
           icon: "show_chart",
           text: "运行监测",
           route: ""
         },
+        {
+          icon: "report",
+          text: "分析报告",
+          route: ""
+        },
         { heading: "系统" },
+        {
+          icon: "line_style",
+          text: "系统拓扑",
+          route: ""
+        },
         {
           icon: "domain",
           text: "楼宇管理",
@@ -114,9 +123,14 @@ export default {
           route: "/device"
         },
         {
+          icon: "person",
+          text: "用户管理",
+          route: "/user"
+        },
+        {
           icon: "settings",
           text: "用户设置",
-          route: "/user"
+          route: "/profile"
         }
       ],
       route: this.$route.name

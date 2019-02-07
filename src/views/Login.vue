@@ -1,9 +1,9 @@
 <template>
-  <v-app dark>
+  <v-app>
     <v-content>
       <v-container fluid fill-height>
         <v-layout align-center justify-center>
-          <v-flex sm12 md8>
+          <v-flex sm12 md8 lg6>
             <v-card class="elevation-12">
               <v-layout row wrap fill-height>
                 <v-flex md6 class="hidden-sm-and-down">
@@ -34,6 +34,7 @@
                             label="用户名"
                             v-model="username"
                             type="text"
+                            :rules="[v => !!v || '请填写用户名']"
                           ></v-text-field>
                           <v-text-field
                             id="password"
@@ -42,6 +43,7 @@
                             name="password"
                             label="密码"
                             type="password"
+                            :rules="[v => !!v || '请输入密码']"
                           ></v-text-field>
                         </v-form>
                       </v-card-text>

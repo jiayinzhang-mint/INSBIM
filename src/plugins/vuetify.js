@@ -9,7 +9,7 @@ import "./snackbar/index";
 
 Vue.use(Vuetify, {
   theme: {
-    primary: colors.indigo.lighten3,
+    primary: colors.indigo.lighten2,
     secondary: "#424242",
     accent: "#82B1FF",
     error: "#FF5252",

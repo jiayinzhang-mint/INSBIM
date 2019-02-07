@@ -37,23 +37,23 @@ export default {
         },
         {
           title: "水压",
-          route: "/device/waterpressure"
+          route: "/device/sensor/1"
         },
         {
           title: "开盖",
-          route: "/device/cap"
+          route: "/device/sensor/2"
         },
         {
           title: "水质",
-          route: "/device/waterquality"
+          route: "/device/sensor/3"
         },
         {
           title: "温感",
-          route: "/device/temperature"
+          route: "/device/sensor/4"
         },
         {
           title: "烟感",
-          route: "/device/smoke"
+          route: "/device/sensor/5"
         }
       ]
     };

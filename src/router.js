@@ -34,46 +34,31 @@ export default new Router({
           component: () => import("./views/Device"),
           children: [
             {
-              path: "/device/waterpressure",
-              name: "水压传感器",
-              component: () => import("./components/device/WaterPressure")
-            },
-            {
-              path: "/device/cap",
-              name: "开盖传感器",
-              component: () => import("./components/device/Cap")
-            },
-            {
-              path: "/device/waterquality",
-              name: "水质传感器",
-              component: () => import("./components/device/WaterQuality")
-            },
-            {
-              path: "/device/temperature",
-              name: "温度感应",
-              component: () => import("./components/device/Temperature")
-            },
-            {
-              path: "/device/smoke",
-              name: "烟雾感应器",
-              component: () => import("./components/device/Smoke")
+              path: "/device/sensor/:id",
+              name: "传感器管理",
+              component: () => import("./components/device/SensorManage")
             }
           ]
         },
         {
           path: "/user",
+          name: "用户管理",
+          component: () => import("./views/User")
+        },
+        {
+          path: "/profile",
           name: "用户设置",
-          component: () => import("./views/User"),
+          component: () => import("./views/Profile"),
           children: [
             {
-              path: "/user/common",
+              path: "/profile/common",
               name: "通用设置",
-              component: () => import("./components/user/Common")
+              component: () => import("./components/profile/Common")
             },
             {
-              path: "/user/security",
-              name: "安全设置",
-              component: () => import("./components/user/Security")
+              path: "/profile/changepasswd",
+              name: "修改密码",
+              component: () => import("./components/profile/ChangePasswd")
             }
           ]
         }

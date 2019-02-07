@@ -16,7 +16,7 @@
         </v-btn-toggle>
       </v-toolbar>
       <v-flex xs12 md4 lg3>
-        <v-card ripple>
+        <v-card ripple class="clickable-card">
           <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" aspect-ratio="2.75"></v-img>
           <v-card-title>
             <div class="font-weight-bold">告警</div>
@@ -27,7 +27,7 @@
         </v-card>
       </v-flex>
       <v-flex xs12 md4 lg3>
-        <v-card ripple>
+        <v-card ripple class="clickable-card">
           <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" aspect-ratio="2.75"></v-img>
           <v-card-title>
             <div class="font-weight-bold">告警</div>
@@ -38,7 +38,7 @@
         </v-card>
       </v-flex>
       <v-flex xs12 md4 lg3>
-        <v-card ripple>
+        <v-card ripple class="clickable-card">
           <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" aspect-ratio="2.75"></v-img>
           <v-card-title>
             <div class="font-weight-bold">告警</div>

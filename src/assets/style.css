@@ -16,3 +16,9 @@
 .v-card {
   border-radius: 5px
 }
+
+.clickable-card {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
