@@ -15,6 +15,22 @@ class buildingService {
     return rspData;
   }
 
+  static async createBlock(block) {
+    const rspData = await basicService.postRequest("/block", block);
+    await this.getBlock();
+    await this.getStorey();
+    message.snackbar(rspData.msg);
+    return rspData;
+  }
+
+  static async updateBlock(block) {
+    const rspData = await basicService.putRequest("/block", block);
+    await this.getBlock();
+    await this.getStorey();
+    message.snackbar(rspData.msg);
+    return rspData;
+  }
+
   static async createStorey(floor, blockId) {
     const rspData = await basicService.postRequest("/storey", {
       floor: floor,

@@ -1,16 +1,15 @@
 <template>
-  <v-container grid-list-lg>
+  <v-container>
     <v-layout row wrap>
-      <v-flex xs2 lg1>
+      <v-flex xs2>
         <v-navigation-drawer permanent stateless value="true" class="transparent">
-          <v-list>
-            <v-list-tile @click="createStorey">
+          <v-list grid-list-lg style="height:calc(100vh - 85px);overflow :auto" dense>
+            <v-list-tile @click="createStorey(storeyListShow[0].floor-1)">
               <v-spacer></v-spacer>
               <v-list-tile-content>
                 <v-list-tile-title class="text-xs-right headline pr-3 mb-2">+</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
-
             <v-list-tile
               v-for="(item,i) in storeyListShow"
               :key="i"
@@ -21,11 +20,22 @@
                 <v-list-tile-title class="text-xs-right pr-3">{{ item.floor }} F</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
+            <v-list-tile @click="createStorey(storeyListShow[storeyListShow.length-1].floor+1)">
+              <v-spacer></v-spacer>
+              <v-list-tile-content>
+                <v-list-tile-title class="text-xs-right headline pr-3 mb-2">+</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
           </v-list>
         </v-navigation-drawer>
       </v-flex>
-      <v-flex xs10 lg11>
-        <router-view @getstoreylistshow="getStoreyListShow"></router-view>
+      <v-flex xs10>
+        <router-view v-if="$route.params.storeyId" @getstoreylistshow="getStoreyListShow"></router-view>
+        <v-container v-else fluid fill-height>
+          <v-layout align-center justify-center>
+            <div class="headline font-weight-light">请选择楼层</div>
+          </v-layout>
+        </v-container>
       </v-flex>
     </v-layout>
   </v-container>
@@ -49,8 +59,10 @@ export default {
         }
       });
     },
-    async createStorey() {
-      const floor = this.storeyListShow.length + 1;
+    async createStorey(floor) {
+      if (floor == 0) {
+        floor = -1;
+      }
       const blockId = this.$route.params.blockId;
       await buildingService.createStorey(floor, blockId);
       this.getStoreyListShow();

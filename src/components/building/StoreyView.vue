@@ -213,6 +213,7 @@ export default {
     return {
       block: { name: "" },
       storey: { floor: "" },
+      floorNum: 0,
       deviceListShow: [],
       deviceListUngroup: [],
       tab: null,
@@ -269,6 +270,7 @@ export default {
       var blockAlt = this.storeyList.find(e => {
         return e.key == this.$route.params.blockId;
       });
+      this.floorNum = blockAlt.item.length;
       this.storey = blockAlt.item.find(e => {
         return e._id == this.$route.params.storeyId;
       });
@@ -308,6 +310,7 @@ export default {
       try {
         await this.$confirm("确认删除吗？", "本操作无法恢复。");
         await buildingService.deleteStorey(this.storey._id);
+        await this.getBuildingInfo();
         this.$emit("getstoreylistshow");
         this.$router.push({ path: "/building/" + this.block._id });
       } catch (err) {}
@@ -321,13 +324,17 @@ export default {
     })
   },
   async mounted() {
-    await this.getBuildingInfo();
-    await this.getDeviceList();
+    try {
+      await this.getBuildingInfo();
+      await this.getDeviceList();
+    } catch (err) {}
   },
   async beforeRouteUpdate(to, from, next) {
-    next();
-    await this.getBuildingInfo();
-    await this.getDeviceList();
+    try {
+      next();
+      await this.getBuildingInfo();
+      await this.getDeviceList();
+    } catch (err) {}
   }
 };
 </script>
