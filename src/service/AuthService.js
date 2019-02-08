@@ -7,8 +7,10 @@ class authService {
       username: username,
       password: password
     });
-    var userInfo = rspData.data.user;
-    store.dispatch("user/login", userInfo);
+    if (rspData.data) {
+      var userInfo = rspData.data.user;
+      store.dispatch("user/login", userInfo);
+    }
     message.snackbar(rspData.msg);
     return rspData;
   }

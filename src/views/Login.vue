@@ -44,6 +44,7 @@
                             label="密码"
                             type="password"
                             :rules="[v => !!v || '请输入密码']"
+                            @keyup.enter="login"
                           ></v-text-field>
                         </v-form>
                       </v-card-text>
@@ -64,6 +65,8 @@
 
 <script>
 import authService from "../service/AuthService";
+import buildingService from "../service/BuildingService";
+import deviceService from "../service/DeviceService";
 export default {
   data() {
     return {
@@ -74,6 +77,9 @@ export default {
   methods: {
     async login() {
       var rspData = await authService.login(this.username, this.password);
+      await buildingService.getStorey();
+      await buildingService.getBlock();
+      await deviceService.getDevice();
       if (rspData.msg) {
         this.$router.push({ path: "/dashboard" });
       }

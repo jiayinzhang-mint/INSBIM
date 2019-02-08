@@ -14,6 +14,21 @@
               <span class="font-weight-bold text-uppercase">{{userInfo.username}}</span>&nbsp;
             </v-list-tile-title>
           </v-list-tile-content>
+          <v-list-tile-action>
+            <v-menu bottom left>
+              <v-btn icon slot="activator">
+                <v-icon>more_vert</v-icon>
+              </v-btn>
+              <v-list>
+                <v-list-tile v-for="(item, index) in userMenu" ripple :key="index" :to="item.route">
+                  <v-list-tile-action>
+                    <v-icon>{{ item.icon }}</v-icon>
+                  </v-list-tile-action>
+                  <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                </v-list-tile>
+              </v-list>
+            </v-menu>
+          </v-list-tile-action>
         </v-list-tile>
         <template v-for="(item,j) in menu">
           <v-layout v-if="item.heading" :key="j" row align-center>
@@ -96,7 +111,7 @@ export default {
         {
           icon: "3d_rotation",
           text: "3D 概览",
-          route: ""
+          route: "/glance"
         },
         {
           icon: "show_chart",
@@ -133,6 +148,13 @@ export default {
           icon: "settings",
           text: "用户设置",
           route: "/profile"
+        }
+      ],
+      userMenu: [
+        {
+          icon: "exit_to_app",
+          title: "注销",
+          route: "/"
         }
       ],
       route: this.$route.name

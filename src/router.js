@@ -24,6 +24,23 @@ export default new Router({
           component: () => import("./views/Inbox")
         },
         {
+          path: "/glance",
+          name: "3D 概览",
+          component: () => import("./views/Glance")
+        },
+        {
+          path: "/glance/:blockId",
+          name: "3D 概览",
+          component: () => import("./components/glance/StoreyList"),
+          children: [
+            {
+              path: "/glance/:blockId/:storeyId",
+              name: "3D 概览",
+              component: () => import("./components/glance/ModelView")
+            }
+          ]
+        },
+        {
           path: "/building",
           name: "楼宇管理",
           component: () => import("./views/Building")
@@ -34,7 +51,7 @@ export default new Router({
           component: () => import("./views/Device"),
           children: [
             {
-              path: "/device/sensor/:id",
+              path: "/device/sensor",
               name: "传感器管理",
               component: () => import("./components/device/SensorManage")
             }

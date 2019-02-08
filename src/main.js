@@ -1,16 +1,23 @@
 import Vue from "vue";
 import "./plugins/vuetify";
+import axios from "axios";
 import App from "./App";
 import router from "./router";
 import store from "./store/store";
-import axios from "axios";
+import dimUpload from "./plugins/upload";
+
+Vue.use(dimUpload);
 
 Vue.config.productionTip = false;
+
 axios.interceptors.request.use(config => {
   //设置拦截器
   config.headers["Content-Type"] = "application/json;charset=UTF-8";
   config.headers["Authorization"] =
     "INSBIM " + store.getters["user/userInfo"].token;
+  // if (config.method === "post" || config.method === "put") {
+  //   config.data = qs.stringify(config.data);
+  // }
   return config;
 });
 

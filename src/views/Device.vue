@@ -33,27 +33,8 @@ export default {
     return {
       items: [
         {
-          heading: "传感器"
-        },
-        {
-          title: "水压",
-          route: "/device/sensor/1"
-        },
-        {
-          title: "开盖",
-          route: "/device/sensor/2"
-        },
-        {
-          title: "水质",
-          route: "/device/sensor/3"
-        },
-        {
-          title: "温感",
-          route: "/device/sensor/4"
-        },
-        {
-          title: "烟感",
-          route: "/device/sensor/5"
+          title: "传感器",
+          route: "/device/sensor"
         }
       ]
     };

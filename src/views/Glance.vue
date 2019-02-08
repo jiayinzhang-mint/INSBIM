@@ -8,6 +8,7 @@
             :class="`elevation-${hover ? 8 : 2}`"
             ripple
             class="clickable-card"
+            :to="'/glance/'+item._id"
           >
             <v-responsive :aspect-ratio="1/1">
               <v-card-title class="font-weight-bold subheading text-uppercase">{{item.name}}</v-card-title>
@@ -31,7 +32,9 @@ export default {
       blockList: "building/blockList"
     })
   },
-  mounted() {}
+  mounted() {
+    console.log
+  }
 };
 </script>
 

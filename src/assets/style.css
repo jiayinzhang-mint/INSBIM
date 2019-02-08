@@ -21,3 +21,16 @@
   user-select: none;
   -webkit-user-select: none;
 }
+
+.v-tooltip__content {
+  background: #212121;
+  border-radius: 5px
+}
+
+.theme--light.v-table, .theme--light.v-datatable .v-datatable__actions {
+  background-color: transparent
+}
+
+.container {
+  max-width: 100%;
+}

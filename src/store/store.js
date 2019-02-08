@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 
 import user from "./modules/user";
 import building from "./modules/building";
+import device from "./modules/device";
 
 Vue.use(Vuex);
 
@@ -18,16 +19,20 @@ const vuexCookie = new VuexPersistence({
   filter: mutation => mutation.type == "user/updateUserInfo"
 });
 
-const vuexLocal = new VuexPersistence({
+const vuexSession = new VuexPersistence({
   storage: window.sessionStorage,
-  reducer: state => ({ building: state.building }),
-  filter: mutation => mutation.type == "building/updateResource"
+  reducer: state => ({ building: state.building, device: state.device }),
+  filter: mutation =>
+    mutation.type == "building/updateBlock" ||
+    mutation.type == "building/updateStorey" ||
+    mutation.type == "device/updateDevice"
 });
 
 export default new Vuex.Store({
   modules: {
     user,
-    building
+    building,
+    device
   },
-  plugins: [vuexCookie.plugin, vuexLocal.plugin]
+  plugins: [vuexCookie.plugin, vuexSession.plugin]
 });

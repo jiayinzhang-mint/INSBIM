@@ -11,7 +11,6 @@ class basicService {
 
   static async getRequest(url, params) {
     try {
-      console.log(params);
       var rsp = await axios.get(url, { params: params });
     } catch (err) {
       return err;
@@ -48,7 +47,7 @@ class basicService {
 
   static async deleteRequest(url, params) {
     try {
-      var rsp = await axios.delete(url, params);
+      var rsp = await axios.delete(url, { params: params });
     } catch (err) {
       return err;
     }
