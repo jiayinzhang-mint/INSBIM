@@ -15,66 +15,78 @@ export default new Router({
       children: [
         {
           path: "/dashboard",
-          name: "仪表板",
+          meta: "仪表板",
           component: () => import("./views/Dashboard")
         },
         {
           path: "/inbox",
-          name: "收件箱",
+          meta: "收件箱",
           component: () => import("./views/Inbox")
         },
         {
           path: "/glance",
-          name: "3D 概览",
+          meta: "3D 概览",
           component: () => import("./views/Glance")
         },
         {
           path: "/glance/:blockId",
-          name: "3D 概览",
+          meta: "3D 概览",
           component: () => import("./components/glance/StoreyList"),
           children: [
             {
               path: "/glance/:blockId/:storeyId",
-              name: "3D 概览",
+              meta: "3D 概览",
               component: () => import("./components/glance/ModelView")
             }
           ]
         },
         {
           path: "/building",
-          name: "楼宇管理",
+          meta: "楼宇管理",
           component: () => import("./views/Building")
         },
         {
+          path: "/building/:blockId",
+          meta: "楼宇管理",
+          component: () => import("./components/building/StoreyList"),
+          children: [
+            {
+              path: "/building/:blockId/:storeyId",
+              meta: "楼宇管理",
+              component: () => import("./components/building/StoreyView")
+            }
+          ]
+        },
+        {
           path: "/device",
-          name: "设备管理",
+          meta: "设备仓库",
           component: () => import("./views/Device"),
           children: [
             {
               path: "/device/sensor",
-              name: "传感器管理",
+              meta: "传感器管理",
               component: () => import("./components/device/SensorManage")
             }
           ]
         },
         {
           path: "/user",
-          name: "用户管理",
+          meta: "用户管理",
           component: () => import("./views/User")
         },
         {
           path: "/profile",
-          name: "用户设置",
+          meta: "用户设置",
           component: () => import("./views/Profile"),
           children: [
             {
               path: "/profile/common",
-              name: "通用设置",
+              meta: "通用设置",
               component: () => import("./components/profile/Common")
             },
             {
               path: "/profile/changepasswd",
-              name: "修改密码",
+              meta: "修改密码",
               component: () => import("./components/profile/ChangePasswd")
             }
           ]

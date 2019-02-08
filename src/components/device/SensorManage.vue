@@ -3,18 +3,12 @@
     <v-toolbar class="transparent" flat>
       <v-text-field v-model="search" append-icon="search" label="搜索" single-line hide-details></v-text-field>
       <v-spacer></v-spacer>
-      <v-tooltip bottom>
-        <v-btn slot="activator" icon @click="createDeviceDialog=true">
-          <v-icon>add</v-icon>
-        </v-btn>
-        <span>新增</span>
-      </v-tooltip>
-      <v-tooltip bottom>
-        <v-btn slot="activator" icon @click="importDeviceDialog=true">
-          <v-icon>playlist_add</v-icon>
-        </v-btn>
-        <span>批量导入</span>
-      </v-tooltip>
+      <v-btn flat round color="primary" @click="createDeviceDialog=true">
+        <v-icon>add</v-icon>新增
+      </v-btn>
+      <v-btn flat round color="primary" @click="importDeviceDialog=true">
+        <v-icon>playlist_add</v-icon>批量导入
+      </v-btn>
     </v-toolbar>
     <v-data-table
       rows-per-page-text="每页项数"

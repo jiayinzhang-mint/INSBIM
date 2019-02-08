@@ -136,7 +136,7 @@ export default {
         },
         {
           icon: "dns",
-          text: "设备管理",
+          text: "设备仓库",
           route: "/device"
         },
         {
@@ -162,7 +162,7 @@ export default {
   },
   watch: {
     $route() {
-      this.name = this.$route.name;
+      this.name = this.$route.meta;
     }
   },
   computed: {
@@ -171,7 +171,7 @@ export default {
     })
   },
   mounted() {
-    this.name = this.$route.name;
+    this.name = this.$route.meta;
   }
 };
 </script>

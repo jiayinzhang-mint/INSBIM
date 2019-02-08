@@ -2,18 +2,11 @@
   <v-container grid-list-lg>
     <v-layout row wrap>
       <v-flex xs12 sm4 md3 v-for="(item,i) in blockList" :key="i">
-        <v-hover>
-          <v-card
-            slot-scope="{ hover }"
-            :class="`elevation-${hover ? 8 : 2}`"
-            ripple
-            class="clickable-card"
-          >
-            <v-responsive :aspect-ratio="1/1">
-              <v-card-title class="font-weight-bold subheading text-uppercase">{{item.name}}</v-card-title>
-            </v-responsive>
-          </v-card>
-        </v-hover>
+        <v-card ripple class="clickable-card" :to="'/building/'+item._id">
+          <v-responsive :aspect-ratio="1/1">
+            <v-card-title class="font-weight-bold subheading text-uppercase">{{item.name}}</v-card-title>
+          </v-responsive>
+        </v-card>
       </v-flex>
     </v-layout>
   </v-container>

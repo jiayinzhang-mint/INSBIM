@@ -1,13 +1,20 @@
 <template>
-  <v-container grid-list-md>
+  <v-container grid-list-lg>
     <v-layout row wrap>
       <v-flex xs2 lg1>
         <v-navigation-drawer permanent stateless value="true" class="transparent">
           <v-list>
+            <v-list-tile @click="createStorey">
+              <v-spacer></v-spacer>
+              <v-list-tile-content>
+                <v-list-tile-title class="text-xs-right headline pr-3 mb-2">+</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+
             <v-list-tile
               v-for="(item,i) in storeyListShow"
               :key="i"
-              :to="'/glance/'+$route.params.blockId +'/'+item._id"
+              :to="'/building/'+$route.params.blockId +'/'+item._id"
               ripple
             >
               <v-list-tile-content>
@@ -18,7 +25,7 @@
         </v-navigation-drawer>
       </v-flex>
       <v-flex xs10 lg11>
-        <router-view></router-view>
+        <router-view @getstoreylistshow="getStoreyListShow"></router-view>
       </v-flex>
     </v-layout>
   </v-container>
@@ -27,6 +34,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import buildingService from "../../service/BuildingService";
 export default {
   data() {
     return {
@@ -40,6 +48,12 @@ export default {
           this.storeyListShow = element.item;
         }
       });
+    },
+    async createStorey() {
+      const floor = this.storeyListShow.length + 1;
+      const blockId = this.$route.params.blockId;
+      await buildingService.createStorey(floor, blockId);
+      this.getStoreyListShow();
     }
   },
   computed: {

@@ -31,6 +31,13 @@ class deviceService {
     message.snackbar(rspData.msg);
     return rspData;
   }
+
+  static async updateDevice(params) {
+    const rspData = await basicService.putRequest("/device", params);
+    await this.getDevice();
+    message.snackbar(rspData.msg);
+    return rspData;
+  }
 }
 
 export default deviceService;

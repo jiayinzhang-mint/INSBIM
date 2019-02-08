@@ -14,5 +14,24 @@ class buildingService {
     await store.dispatch("building/updateBlock", rspData.data.blockList);
     return rspData;
   }
+
+  static async createStorey(floor, blockId) {
+    const rspData = await basicService.postRequest("/storey", {
+      floor: floor,
+      blockId: blockId
+    });
+    await this.getStorey();
+    message.snackbar(rspData.msg);
+    return rspData;
+  }
+
+  static async deleteStorey(storeyId) {
+    const rspData = await basicService.deleteRequest("/storey", {
+      storeyId: storeyId
+    });
+    await this.getStorey();
+    message.snackbar(rspData.msg);
+    return rspData;
+  }
 }
 export default buildingService;
