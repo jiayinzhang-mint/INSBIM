@@ -166,7 +166,9 @@ export default {
       try {
         await this.$confirm("确认删除?");
         await deviceService.deleteDevice(id);
-      } catch (err) {}
+      } catch (err) {
+        err;
+      }
     }
   },
   computed: {

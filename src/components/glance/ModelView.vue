@@ -69,6 +69,7 @@ export default {
         new BABYLON.Vector3(1, 1, 0),
         scene
       );
+      return light1
     },
     async createModel(scene, canvas) {
       var sphere = BABYLON.MeshBuilder.CreateSphere(

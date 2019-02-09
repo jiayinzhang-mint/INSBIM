@@ -125,7 +125,14 @@
               <v-card>
                 <v-layout justify-center>
                   <v-flex xs12 md8>
-                    <v-btn block round color="error darken-1" depressed @click="deleteStorey">删除本层</v-btn>
+                    <v-btn
+                      v-if="storey.floor == floorNum"
+                      block
+                      round
+                      color="error darken-1"
+                      depressed
+                      @click="deleteStorey"
+                    >删除本层</v-btn>
                   </v-flex>
                 </v-layout>
               </v-card>
@@ -269,11 +276,15 @@ export default {
       });
       var blockAlt = this.storeyList.find(e => {
         return e.key == this.$route.params.blockId;
-      });
-      this.floorNum = blockAlt.item.length;
-      this.storey = blockAlt.item.find(e => {
+      }).item;
+      this.storey = blockAlt.find(e => {
         return e._id == this.$route.params.storeyId;
       });
+      var floorArr = [];
+      blockAlt.forEach(e => {
+        floorArr.push(Number(e.floor));
+      });
+      this.floorNum = Math.max(...floorArr);
     },
     async getDeviceList() {
       this.deviceListShow = [];
@@ -313,7 +324,9 @@ export default {
         await this.getBuildingInfo();
         this.$emit("getstoreylistshow");
         this.$router.push({ path: "/building/" + this.block._id });
-      } catch (err) {}
+      } catch (err) {
+        err;
+      }
     }
   },
   computed: {
@@ -324,17 +337,13 @@ export default {
     })
   },
   async mounted() {
-    try {
-      await this.getBuildingInfo();
-      await this.getDeviceList();
-    } catch (err) {}
+    await this.getBuildingInfo();
+    await this.getDeviceList();
   },
   async beforeRouteUpdate(to, from, next) {
-    try {
-      next();
-      await this.getBuildingInfo();
-      await this.getDeviceList();
-    } catch (err) {}
+    next();
+    await this.getBuildingInfo();
+    await this.getDeviceList();
   }
 };
 </script>
