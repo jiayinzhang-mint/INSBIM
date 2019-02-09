@@ -21,11 +21,16 @@ const vuexCookie = new VuexPersistence({
 
 const vuexSession = new VuexPersistence({
   storage: window.sessionStorage,
-  reducer: state => ({ building: state.building, device: state.device }),
+  reducer: state => ({
+    building: state.building,
+    device: state.device,
+    user: state.user
+  }),
   filter: mutation =>
     mutation.type == "building/updateBlock" ||
     mutation.type == "building/updateStorey" ||
-    mutation.type == "device/updateDevice"
+    mutation.type == "device/updateDevice" ||
+    mutation.type == "user/updateUserList"
 });
 
 export default new Vuex.Store({

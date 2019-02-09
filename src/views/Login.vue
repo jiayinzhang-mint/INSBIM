@@ -67,6 +67,7 @@
 import authService from "../service/AuthService";
 import buildingService from "../service/BuildingService";
 import deviceService from "../service/DeviceService";
+import userService from "../service/UserService";
 export default {
   data() {
     return {
@@ -80,6 +81,7 @@ export default {
       await buildingService.getStorey();
       await buildingService.getBlock();
       await deviceService.getDevice();
+      await userService.getUser();
       if (rspData.msg) {
         this.$router.push({ path: "/dashboard" });
       }

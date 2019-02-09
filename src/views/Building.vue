@@ -15,7 +15,7 @@
     </v-layout>
     <v-layout row wrap>
       <v-flex xs12 sm4 md3 v-for="(item,i) in blockList" :key="i">
-        <v-card ripple class="clickable-card">
+        <v-card ripple>
           <v-responsive :aspect-ratio="1/1">
             <v-card-title class="font-weight-bold subheading text-uppercase">
               {{item.name}}

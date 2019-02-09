@@ -75,6 +75,18 @@ export default new Router({
           component: () => import("./views/User")
         },
         {
+          path: "/user/:group",
+          meta: "用户管理",
+          component: () => import("./components/user/UserList"),
+          children: [
+            {
+              path: "/user/:group/:userId",
+              meta: "用户管理",
+              component: () => import("./components/user/UserProfile")
+            }
+          ]
+        },
+        {
           path: "/profile",
           meta: "用户设置",
           component: () => import("./views/Profile"),
