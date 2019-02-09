@@ -2,7 +2,8 @@ const compressionPlugin = require("compression-webpack-plugin");
 const uglifyPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
-  assetsDir: "./static",
+  assetsDir: "assets",
+
   configureWebpack: config => {
     if (process.env.NODE_ENV === "production") {
       return {
@@ -24,11 +25,25 @@ module.exports = {
             threshold: 10240,
             minRatio: 0.8,
             deleteOriginalAssets: false
-          })
+          }),
+          new CopyWebpackPlugin([
+            {
+              from: path.resolve(__dirname, "../static"),
+              to: config.build.assetsSubDirectory,
+              ignore: [".*"]
+            }
+          ])
         ]
       };
     }
-  }
+  },
+
+  publicPath: undefined,
+  outputDir: undefined,
+  runtimeCompiler: undefined,
+  productionSourceMap: undefined,
+  parallel: undefined,
+  css: undefined
 };
 
 //proxy
@@ -40,5 +55,13 @@ module.exports = {
         ws: false
       }
     }
-  }
+  },
+
+  publicPath: undefined,
+  outputDir: undefined,
+  assetsDir: "assets",
+  runtimeCompiler: undefined,
+  productionSourceMap: undefined,
+  parallel: undefined,
+  css: undefined
 };

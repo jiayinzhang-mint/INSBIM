@@ -33,7 +33,12 @@
         <router-view v-if="$route.params.storeyId" @getstoreylistshow="getStoreyListShow"></router-view>
         <v-container v-else fluid fill-height>
           <v-layout align-center justify-center>
-            <div class="headline font-weight-light">请选择楼层</div>
+            <v-card flat color="transparent">
+              <v-btn flat small round color="primary" @click="goBack">
+                <v-icon>arrow_back</v-icon>&nbsp;返回上一级
+              </v-btn>
+              <div class="headline font-weight-light">请选择楼层</div>
+            </v-card>
           </v-layout>
         </v-container>
       </v-flex>
@@ -58,6 +63,9 @@ export default {
           this.storeyListShow = element.item;
         }
       });
+    },
+    goBack() {
+      this.$router.push({ path: "/building" });
     },
     async createStorey(floor) {
       if (floor == 0) {

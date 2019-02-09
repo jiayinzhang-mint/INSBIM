@@ -9,6 +9,9 @@
       <v-btn flat round color="primary" @click="importDeviceDialog=true">
         <v-icon>playlist_add</v-icon>批量导入
       </v-btn>
+      <v-btn flat round color="primary" @click="importDeviceDialog=true">
+        <v-icon>play_for_work</v-icon>下载模版
+      </v-btn>
     </v-toolbar>
     <v-data-table
       rows-per-page-text="每页项数"
