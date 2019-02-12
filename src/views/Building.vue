@@ -24,7 +24,7 @@
                 <v-icon class="dim-side-icon">settings</v-icon>
               </v-btn>
             </v-card-title>
-            <v-img src="/building-icon.png" aspect-ratio="1.65"></v-img>
+            <v-img src="/img/building-icon.png" aspect-ratio="1.65"></v-img>
 
             <v-card-actions>
               <v-btn round block flat color="primary" :to="'/building/'+item._id">查看

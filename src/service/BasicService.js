@@ -1,5 +1,4 @@
 import axios from "axios";
-import store from "../store/store";
 
 class basicService {
   static async getData(rsp) {

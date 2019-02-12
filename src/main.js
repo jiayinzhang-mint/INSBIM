@@ -13,8 +13,11 @@ Vue.config.productionTip = false;
 axios.interceptors.request.use(config => {
   //设置拦截器
   config.headers["Content-Type"] = "application/json;charset=UTF-8";
-  config.headers["Authorization"] =
-    "INSBIM " + store.getters["user/userInfo"].token;
+  try {
+    config.headers["Authorization"] =
+      "INSBIM " + store.getters["user/userInfo"].token;
+  } catch (err) {}
+
   // if (config.method === "post" || config.method === "put") {
   //   config.data = qs.stringify(config.data);
   // }
