@@ -28,6 +28,7 @@
 import * as BABYLON from "babylonjs";
 import * as GUI from "babylonjs-gui";
 import * as Materials from "babylonjs-materials";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -69,7 +70,7 @@ export default {
         new BABYLON.Vector3(1, 1, 0),
         scene
       );
-      return light1
+      return light1;
     },
     async createModel(scene, canvas) {
       var sphere = BABYLON.MeshBuilder.CreateSphere(
@@ -78,6 +79,13 @@ export default {
         scene
       );
     }
+  },
+  computed: {
+    ...mapGetters({
+      deviceList: "device/deviceList",
+      blockList: "building/blockList",
+      storeyList: "building/storeyList"
+    })
   },
   mounted() {
     this.init();

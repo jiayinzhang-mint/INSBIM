@@ -5,7 +5,7 @@
         <v-card ripple>
           <v-responsive :aspect-ratio="1/1">
             <v-card-title class="font-weight-bold subheading text-uppercase">{{item.name}}</v-card-title>
-            <v-img src="/building-icon.png" aspect-ratio="1.65"></v-img>
+            <v-img src="/img/building-icon.png" aspect-ratio="1.65"></v-img>
             <v-card-actions>
               <v-btn round block flat color="primary" :to="'/glance/'+item._id">查看
                 <v-icon>chevron_right</v-icon>
