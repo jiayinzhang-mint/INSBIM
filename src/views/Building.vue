@@ -23,6 +23,9 @@
               <v-btn icon small @click="editBlockDialog=true;block.blockId=item._id">
                 <v-icon class="dim-side-icon">settings</v-icon>
               </v-btn>
+              <v-btn icon small @click="deleteBlock(item._id)">
+                <v-icon>clear</v-icon>
+              </v-btn>
             </v-card-title>
             <v-img src="/img/building-icon.png" aspect-ratio="1.65"></v-img>
 
@@ -135,6 +138,14 @@ export default {
       await buildingService.updateBlock(this.block);
       this.editBlockDialog = false;
       this.block = {};
+    },
+    async deleteBlock(blockId) {
+      try {
+        await this.$confirm("确认删除吗？", "本操作无法恢复。");
+        await buildingService.deleteBlock(blockId);
+      } catch (err) {
+        err;
+      }
     }
   },
   computed: {

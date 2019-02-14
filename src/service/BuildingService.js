@@ -31,6 +31,16 @@ class buildingService {
     return rspData;
   }
 
+  static async deleteBlock(blockId) {
+    const rspData = await basicService.deleteRequest("/block", {
+      blockId: blockId
+    });
+    await this.getBlock();
+    await this.getStorey();
+    message.snackbar(rspData.msg);
+    return rspData;
+  }
+
   static async createStorey(floor, blockId) {
     const rspData = await basicService.postRequest("/storey", {
       floor: floor,

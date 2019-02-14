@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <v-flex xs2 lg1>
         <v-navigation-drawer permanent stateless value="true" class="transparent">
-          <v-list>
+          <v-list class="storeylist" dense>
             <v-list-tile
               v-for="(item,i) in storeyListShow"
               :key="i"

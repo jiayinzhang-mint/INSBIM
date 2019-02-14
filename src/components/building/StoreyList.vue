@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <v-flex xs2>
         <v-navigation-drawer permanent stateless value="true" class="transparent">
-          <v-list grid-list-lg style="height:calc(100vh - 85px);overflow :auto" dense>
+          <v-list class="storeylist" dense>
             <v-list-tile @click="createStorey(storeyListShow[0].floor-1)">
               <v-spacer></v-spacer>
               <v-list-tile-content>

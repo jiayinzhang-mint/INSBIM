@@ -25,54 +25,6 @@
           <v-layout>
             <v-flex xs12>
               <v-card>
-                <v-container text-xs-center>
-                  <v-layout>
-                    <v-flex xs3>
-                      <v-card-text>
-                        <h4 class="grey--text">大楼</h4>
-                      </v-card-text>
-                      <v-card-text>
-                        <div class="dim-headline text-uppercase font-weight-regular">{{block.name}}</div>
-                      </v-card-text>
-                    </v-flex>
-                    <v-flex xs3>
-                      <v-card-text>
-                        <h4 class="grey--text">楼层</h4>
-                      </v-card-text>
-                      <v-card-text>
-                        <div
-                          class="dim-headline text-uppercase font-weight-regular"
-                        >{{storey.floor}} F</div>
-                      </v-card-text>
-                    </v-flex>
-                    <v-flex xs3>
-                      <v-card-text>
-                        <h4 class="grey--text">设备</h4>
-                      </v-card-text>
-                      <v-card-text>
-                        <div
-                          class="dim-headline text-uppercase font-weight-regular"
-                        >{{deviceListShow.length}}</div>
-                      </v-card-text>
-                    </v-flex>
-                    <v-flex xs3>
-                      <v-card-text>
-                        <h4 class="grey--text">在线</h4>
-                      </v-card-text>
-                      <v-card-text>
-                        <div
-                          class="dim-headline text-uppercase font-weight-regular"
-                        >{{deviceListShow.length}}</div>
-                      </v-card-text>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
-              </v-card>
-            </v-flex>
-          </v-layout>
-          <v-layout>
-            <v-flex xs12>
-              <v-card>
                 <v-toolbar flat color="transparent">
                   <v-toolbar-title class="dim-headline">本层设备</v-toolbar-title>
                   <v-spacer></v-spacer>

@@ -61,3 +61,8 @@
 .theme--dark.v-table {
   background-color: transparent
 }
+
+.storeylist {
+  height: calc(100vh - 85px);
+  overflow: auto
+}
