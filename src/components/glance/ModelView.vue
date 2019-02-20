@@ -45,6 +45,9 @@
 </template>
 
 <script>
+import * as BABYLON from "babylonjs";
+import * as GUI from "babylonjs-gui";
+import * as Materials from "babylonjs-materials";
 import { mapGetters } from "vuex";
 export default {
   data() {
@@ -57,7 +60,17 @@ export default {
     };
   },
   methods: {
-    async init() {},
+    async init() {
+      this.canvas = document.getElementById("renderCanvas");
+      this.engine = new BABYLON.Engine(this.canvas, true);
+      this.scene = await this.createScene();
+      await this.createCamera(this.scene, this.canvas);
+      await this.createLight(this.scene);
+      await this.createModel(this.scene);
+      this.engine.runRenderLoop(() => {
+        this.scene.render();
+      });
+    },
     async getBuildingInfo() {
       this.block = this.blockList.find(e => {
         return e._id == this.$route.params.blockId;
@@ -73,6 +86,36 @@ export default {
         floorArr.push(Number(e.floor));
       });
       this.floorNum = Math.max(...floorArr);
+    },
+    async createScene() {
+      var scene = new BABYLON.Scene(this.engine);
+      return scene;
+    },
+    async createCamera(scene, canvas) {
+      var camera = new BABYLON.ArcRotateCamera(
+        "Camera",
+        Math.PI / 2,
+        Math.PI / 2,
+        2,
+        BABYLON.Vector3.Zero(),
+        scene
+      );
+      camera.attachControl(canvas, true);
+    },
+    async createLight(scene, canvas) {
+      var light1 = new BABYLON.HemisphericLight(
+        "light1",
+        new BABYLON.Vector3(1, 1, 0),
+        scene
+      );
+      return light1;
+    },
+    async createModel(scene, canvas) {
+      var sphere = BABYLON.MeshBuilder.CreateSphere(
+        "sphere",
+        { diameter: 0.5 },
+        scene
+      );
     }
   },
   computed: {
@@ -92,6 +135,7 @@ export default {
   }
 };
 </script>
+
 
 <style scoped>
 canvas {
