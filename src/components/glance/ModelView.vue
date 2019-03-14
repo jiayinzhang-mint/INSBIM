@@ -46,6 +46,7 @@
 
 <script>
 import * as BABYLON from "babylonjs";
+import "babylonjs-loaders";
 import * as GUI from "babylonjs-gui";
 import * as Materials from "babylonjs-materials";
 import { mapGetters } from "vuex";
@@ -69,6 +70,9 @@ export default {
       await this.createModel(this.scene);
       this.engine.runRenderLoop(() => {
         this.scene.render();
+      });
+      window.addEventListener("resize", function() {
+        engine.resize();
       });
     },
     async getBuildingInfo() {
@@ -111,11 +115,42 @@ export default {
       return light1;
     },
     async createModel(scene, canvas) {
-      var sphere = BABYLON.MeshBuilder.CreateSphere(
-        "sphere",
-        { diameter: 0.5 },
-        scene
+      BABYLON.SceneLoader.Append("", "1.gltf", scene, scene => {
+        scene.createDefaultCameraOrLight(true, true, true);
+      });
+
+      var poi = [
+        [121.30664994046971, 31.483097943677663],
+        [121.29781812883381, 31.49993556801079],
+        [121.31917818607218, 31.48782885656793],
+        [121.29620392366265, 31.48893011040499],
+        [121.27748128554705, 31.496392308719763],
+        [121.32067270566228, 31.47569157016242],
+        [121.2885182308401, 31.512842459284748],
+        [121.28206734918749, 31.51664213767396],
+        [121.31098301674274, 31.51656013961992],
+        [121.32257192137907, 31.482600224024708]
+      ];
+      var center = [121.3, 31.5];
+
+      poi.forEach(function(v) {
+        var cube = BABYLON.Mesh.CreateBox("box", 1, scene, true);
+        cube.position.x = ((v[0] - center[0]) / 0.0262) * 25;
+        cube.position.z = ((v[1] - center[1]) / 0.0262) * 25;
+        cube.position.y = 3;
+      });
+
+      // limit
+
+      var box = BABYLON.Mesh.CreateBox(
+        "box",
+        1,
+        scene,
+        true,
+        BABYLON.Mesh.DOUBLESIDE
       );
+      box.position.y = 3;
+      box.position.z = 26.2;
     }
   },
   computed: {

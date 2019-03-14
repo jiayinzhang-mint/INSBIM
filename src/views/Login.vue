@@ -11,7 +11,7 @@
                     <v-layout align-center column justify-center>
                       <h1 class="display-2 font-weight-light mb-3">INSBIM</h1>
                       <h4 class="body-2">
-                        Powered By DIMLAB
+                        Powered By INSDIM
                         <span class="caption">&reg;</span>
                       </h4>
                     </v-layout>

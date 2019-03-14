@@ -23,7 +23,7 @@ module.exports = {
   devServer: {
     proxy: {
       "/": {
-        target: "http://demo.chassstep.com/",
+        target: "http://127.0.0.1:3000",
         ws: false
       }
     }
