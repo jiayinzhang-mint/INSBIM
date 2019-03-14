@@ -100,8 +100,8 @@ export default {
       this.engine.runRenderLoop(() => {
         this.scene.render();
       });
-      window.addEventListener("resize", function() {
-        engine.resize();
+      window.addEventListener("resize", () => {
+        this.engine.resize();
       });
     },
     async getBuildingInfo() {
@@ -144,18 +144,22 @@ export default {
       return light1;
     },
     async createModel(scene, canvas) {
-      BABYLON.SceneLoader.AppendAsync("", "1.gltf", scene, scene => {
-        // scene.createDefaultCameraOrLight(true, true, true);
-      });
+      BABYLON.SceneLoader.AppendAsync("", "1.gltf", scene, scene => {});
 
       var poi = this.poi;
       var center = [121.3, 31.5];
 
-      poi.forEach(v => {
-        var cube = BABYLON.Mesh.CreateBox("box", 1, scene, true);
-        cube.position.x = ((v[0] - center[0]) / 0.0262) * 25;
-        cube.position.z = ((v[1] - center[1]) / 0.0262) * 25;
-        cube.position.y = 3;
+      var manager = new BABYLON.GUI.GUI3DManager(scene);
+      // Let's add a button
+      var button = new BABYLON.GUI.Button3D("reset");
+      var buttonList = [];
+      poi.forEach((v, index) => {
+        var button = new BABYLON.GUI.HolographicButton("orientation");
+        manager.addControl(button);
+        // add control must be ahead of position settings
+        button.position.x = ((v[0] - center[0]) / 0.0262) * 25;
+        button.position.z = ((v[1] - center[1]) / 0.0262) * 25;
+        button.position.y = 3;
       });
 
       // limit

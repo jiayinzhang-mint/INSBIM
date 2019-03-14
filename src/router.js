@@ -24,6 +24,11 @@ export default new Router({
           component: () => import("./views/Inbox")
         },
         {
+          path: "/inbox/:alertId",
+          meta: "收件箱",
+          component: () => import("./components/inbox/Info")
+        },
+        {
           path: "/glance",
           meta: "3D 概览",
           component: () => import("./views/Glance")
