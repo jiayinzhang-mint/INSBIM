@@ -34,6 +34,22 @@
                       >{{storey.floor}} F</div>
                     </v-card-text>
                   </v-flex>
+                  <v-flex xs3>
+                    <v-card-text>
+                      <h4 class="grey--text">传感器</h4>
+                    </v-card-text>
+                    <v-card-text>
+                      <div class="dim-headline text-uppercase font-weight-regular">{{poi.length}}</div>
+                    </v-card-text>
+                  </v-flex>
+                  <v-flex xs3>
+                    <v-card-text>
+                      <h4 class="grey--text">在线率</h4>
+                    </v-card-text>
+                    <v-card-text>
+                      <div class="dim-headline text-uppercase font-weight-regular">100%</div>
+                    </v-card-text>
+                  </v-flex>
                 </v-layout>
               </v-container>
             </v-card>
@@ -57,7 +73,19 @@ export default {
       engine: null,
       scene: null,
       block: { name: "" },
-      storey: { floor: "" }
+      storey: { floor: "" },
+      poi: [
+        [121.30664994046971, 31.483097943677663],
+        [121.29781812883381, 31.49993556801079],
+        [121.31917818607218, 31.48782885656793],
+        [121.29620392366265, 31.48893011040499],
+        [121.27748128554705, 31.496392308719763],
+        [121.32067270566228, 31.47569157016242],
+        [121.2885182308401, 31.512842459284748],
+        [121.28206734918749, 31.51664213767396],
+        [121.31098301674274, 31.51656013961992],
+        [121.32257192137907, 31.482600224024708]
+      ]
     };
   },
   methods: {
@@ -68,6 +96,7 @@ export default {
       await this.createCamera(this.scene, this.canvas);
       await this.createLight(this.scene);
       await this.createModel(this.scene);
+      await this.createUx(this.scene);
       this.engine.runRenderLoop(() => {
         this.scene.render();
       });
@@ -115,25 +144,14 @@ export default {
       return light1;
     },
     async createModel(scene, canvas) {
-      BABYLON.SceneLoader.Append("", "1.gltf", scene, scene => {
-        scene.createDefaultCameraOrLight(true, true, true);
+      BABYLON.SceneLoader.AppendAsync("", "1.gltf", scene, scene => {
+        // scene.createDefaultCameraOrLight(true, true, true);
       });
 
-      var poi = [
-        [121.30664994046971, 31.483097943677663],
-        [121.29781812883381, 31.49993556801079],
-        [121.31917818607218, 31.48782885656793],
-        [121.29620392366265, 31.48893011040499],
-        [121.27748128554705, 31.496392308719763],
-        [121.32067270566228, 31.47569157016242],
-        [121.2885182308401, 31.512842459284748],
-        [121.28206734918749, 31.51664213767396],
-        [121.31098301674274, 31.51656013961992],
-        [121.32257192137907, 31.482600224024708]
-      ];
+      var poi = this.poi;
       var center = [121.3, 31.5];
 
-      poi.forEach(function(v) {
+      poi.forEach(v => {
         var cube = BABYLON.Mesh.CreateBox("box", 1, scene, true);
         cube.position.x = ((v[0] - center[0]) / 0.0262) * 25;
         cube.position.z = ((v[1] - center[1]) / 0.0262) * 25;
@@ -151,6 +169,18 @@ export default {
       );
       box.position.y = 3;
       box.position.z = 26.2;
+    },
+    async createUx(scene) {
+      // Create the 3D UI manager
+      var manager = new BABYLON.GUI.GUI3DManager(scene);
+      // Let's add a button
+      // var button = new BABYLON.GUI.Button3D("reset");
+      var button = new BABYLON.GUI.HolographicButton("orientation");
+      button.text = "test";
+      manager.addControl(button);
+      // button.linkToTransformNode(anchor);
+      button.position.z = 2;
+      button.position.y = 3;
     }
   },
   computed: {

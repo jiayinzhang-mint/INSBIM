@@ -127,7 +127,7 @@ export default {
         {
           icon: "line_style",
           text: "系统拓扑",
-          route: ""
+          route: "/structure"
         },
         {
           icon: "domain",

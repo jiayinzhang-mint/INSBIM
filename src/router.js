@@ -102,6 +102,11 @@ export default new Router({
               component: () => import("./components/profile/ChangePasswd")
             }
           ]
+        },
+        {
+          path: "/structure",
+          meta: "系统拓扑",
+          component: () => import("./views//Structure")
         }
       ]
     }
