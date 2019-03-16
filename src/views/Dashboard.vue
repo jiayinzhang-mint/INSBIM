@@ -1,108 +1,72 @@
 <template>
   <v-container grid-list-lg>
-    <v-layout row wrap>
+    <v-layout>
       <v-flex xs3>
-        <v-hover>
-          <v-card
-            color="primary"
-            dark
-            slot-scope="{ hover }"
-            :class="`elevation-${hover ? 12 : 2}`"
-          >
-            <v-card-title>
-              <!-- <v-icon class="mr-4" size="64">alarm</v-icon> -->
-              <v-layout column align-start>
-                <div class="body-2 font-weigth-bold mb-1">今日告警</div>
-                <div>
-                  <span class="display-3 font-weight-light">25</span>
-                  <strong>&nbsp;&nbsp;起</strong>
-                </div>
-              </v-layout>
-            </v-card-title>
-          </v-card>
-        </v-hover>
+        <service-day></service-day>
       </v-flex>
       <v-flex xs3>
-        <v-hover>
-          <v-card
-            color="primary"
-            dark
-            slot-scope="{ hover }"
-            :class="`elevation-${hover ? 12 : 2}`"
-          >
-            <v-card-title>
-              <!-- <v-icon class="mr-4" size="64">alarm</v-icon> -->
-              <v-layout column align-start>
-                <div class="body-2 font-weigth-bold mb-1">处理率</div>
-                <div>
-                  <span class="display-3 font-weight-light">98</span>
-                  <strong>&nbsp;&nbsp;%</strong>
-                </div>
-              </v-layout>
-            </v-card-title>
-          </v-card>
-        </v-hover>
-      </v-flex>
-      <v-flex xs3>
-        <v-hover>
-          <v-card
-            color="primary"
-            dark
-            slot-scope="{ hover }"
-            :class="`elevation-${hover ? 12 : 2}`"
-          >
-            <v-card-title>
-              <!-- <v-icon class="mr-4" size="64">alarm</v-icon> -->
-              <v-layout column align-start>
-                <div class="body-2 font-weigth-bold mb-1">设备在线率</div>
-                <div>
-                  <span class="display-3 font-weight-light">97</span>
-                  <strong>&nbsp;&nbsp;%</strong>
-                </div>
-              </v-layout>
-            </v-card-title>
-          </v-card>
-        </v-hover>
-      </v-flex>
-      <v-flex xs3>
-        <v-hover>
-          <v-card
-            color="primary"
-            dark
-            slot-scope="{ hover }"
-            :class="`elevation-${hover ? 12 : 2}`"
-          >
-            <v-card-title>
-              <!-- <v-icon class="mr-4" size="64">alarm</v-icon> -->
-              <v-layout column align-start>
-                <div class="body-2 font-weigth-bold mb-1">服务已运行</div>
-                <div>
-                  <span class="display-3 font-weight-light">100</span>
-                  <strong>&nbsp;&nbsp;天</strong>
-                </div>
-              </v-layout>
-            </v-card-title>
-          </v-card>
-        </v-hover>
+        <temperature></temperature>
       </v-flex>
     </v-layout>
-    <v-layout>
+    <v-layout row wrap>
+      <v-flex xs3>
+        <alert-count></alert-count>
+      </v-flex>
+      <v-flex xs3>
+        <device-online></device-online>
+      </v-flex>
+      <v-flex xs3>
+        <operate-rate></operate-rate>
+      </v-flex>
+      <v-flex xs3>
+        <system-load></system-load>
+      </v-flex>
+    </v-layout>
+    <v-layout row wrap>
       <v-flex xs4>
-        <v-hover>
-          <v-card
-            color="primary"
-            dark
-            slot-scope="{ hover }"
-            :class="`elevation-${hover ? 12 : 2}`"
-          >
-          
-          </v-card>
-        </v-hover>
+        <alert-type></alert-type>
+      </v-flex>
+      <v-flex xs4>
+        <alert-state></alert-state>
+      </v-flex>
+      <v-flex xs4>
+        <my-alert></my-alert>
+      </v-flex>
+      <v-flex xs4>
+        <building-score></building-score>
+      </v-flex>
+      <v-flex xs8 d-flex>
+        <alertCountCompare></alertCountCompare>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-export default {};
+import alertCount from "../components/widget/block/alert/AlertCount";
+import deviceOnline from "../components/widget/block/device/DeviceOnline";
+import operateRate from "../components/widget/block/alert/OperatedRate";
+import serviceDay from "../components/widget/block/service/ServiceDay";
+import systemLoad from "../components/widget/block/service/SystemLoad";
+import temperature from "../components/widget/block/others/Temperature";
+import alertType from "../components/widget/chart/alert/AlertType";
+import alertState from "../components/widget/chart/alert/AlertState";
+import myAlert from "../components/widget/chart/alert/MyAlert";
+import buildingScore from "../components/widget/chart/building/BuildingScore";
+import alertCountCompare from "../components/widget/chart/alert/AlertCountCompare";
+export default {
+  components: {
+    alertCount: alertCount,
+    deviceOnline: deviceOnline,
+    operateRate: operateRate,
+    serviceDay: serviceDay,
+    systemLoad: systemLoad,
+    temperature: temperature,
+    alertType: alertType,
+    alertState: alertState,
+    myAlert: myAlert,
+    buildingScore: buildingScore,
+    alertCountCompare: alertCountCompare
+  }
+};
 </script>
