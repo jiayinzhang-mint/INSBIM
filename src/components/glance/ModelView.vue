@@ -76,8 +76,15 @@
               </v-container>
             </v-card>
           </v-flex>
-           <v-flex xs12>
-           </v-flex>
+          <v-flex xs12>
+            <temperature></temperature>
+          </v-flex>
+          <v-flex xs6>
+            <alert-list></alert-list>
+          </v-flex>
+          <v-flex xs6>
+            <alert-processed></alert-processed>
+          </v-flex>
         </v-layout>
       </v-flex>
     </v-layout>
@@ -119,7 +126,16 @@ import "babylonjs-loaders";
 import * as GUI from "babylonjs-gui";
 import * as Materials from "babylonjs-materials";
 import { mapGetters } from "vuex";
+
+import temperature from "../section/storey/Temperature";
+import alertList from "../section/storey/AlertList";
+import alertProcessed from "../section/storey/AlertProcessed";
 export default {
+  components: {
+    temperature: temperature,
+    alertList: alertList,
+    alertProcessed: alertProcessed
+  },
   data() {
     return {
       canvas: null,
