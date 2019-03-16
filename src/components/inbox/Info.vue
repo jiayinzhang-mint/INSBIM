@@ -161,12 +161,15 @@ export default {
     async createCamera(scene, canvas) {
       this.camera = new BABYLON.ArcRotateCamera(
         "Camera",
-        Math.PI / 2,
+        -Math.PI / 2,
         Math.PI / 3,
-        60,
+        10,
         BABYLON.Vector3.Zero(),
         scene
       );
+      // this.camera.lowerRadiusLimit = 23;
+      // this.camera.upperRadiusLimit = 23;
+      // this.camera.useBouncingBehavior = true;
       this.camera.attachControl(canvas, true);
     },
     async createLight(scene, canvas) {
@@ -196,6 +199,13 @@ export default {
         button.position.z = ((v[1] - center[1]) / 0.0262) * 25;
         button.position.y = 3;
         button.text = "告警";
+        this.camera.setTarget(
+          new BABYLON.Vector3(
+            button.position.x,
+            button.position.y,
+            button.position.z
+          )
+        );
         this.camera.setPosition(
           new BABYLON.Vector3(
             button.position.x + 2,

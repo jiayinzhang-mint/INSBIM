@@ -114,11 +114,6 @@ export default {
           route: "/glance"
         },
         {
-          icon: "show_chart",
-          text: "运行监测",
-          route: ""
-        },
-        {
           icon: "report",
           text: "分析报告",
           route: ""
