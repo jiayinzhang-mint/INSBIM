@@ -6,6 +6,7 @@ import "vuetify/src/stylus/app.styl";
 import zhHans from "vuetify/es5/locale/zh-Hans";
 import "./confirm-dialog/index";
 import "./snackbar/index";
+import "./loading/index";
 
 Vue.use(Vuetify, {
   theme: {

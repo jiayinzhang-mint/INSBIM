@@ -130,6 +130,7 @@ import { mapGetters } from "vuex";
 import temperature from "../section/storey/Temperature";
 import alertList from "../section/storey/AlertList";
 import alertProcessed from "../section/storey/AlertProcessed";
+
 export default {
   components: {
     temperature: temperature,
@@ -164,6 +165,8 @@ export default {
     async init() {
       this.canvas = document.getElementById("renderCanvas");
       this.engine = new BABYLON.Engine(this.canvas, true);
+      // var loadingScreen = new customLoadingScreen("test");
+      // this.engine.loadingScreen = loadingScreen;
       this.scene = await this.createScene();
       await this.createCamera(this.scene, this.canvas);
       await this.createLight(this.scene);
@@ -194,6 +197,9 @@ export default {
     },
     async createScene() {
       var scene = new BABYLON.Scene(this.engine);
+      var url = "/img/scene.jpg";
+      var background = new BABYLON.Layer("back", url, scene);
+      background.isBackground = true;
       return scene;
     },
     async createCamera(scene, canvas) {
@@ -206,7 +212,7 @@ export default {
         scene
       );
       // limit zoom
-      this.camera.lowerRadiusLimit = 10;
+      this.camera.lowerRadiusLimit = 5;
       this.camera.upperRadiusLimit = 60;
       this.camera.useBouncingBehavior = true;
       this.camera.attachControl(canvas, true);
@@ -217,10 +223,22 @@ export default {
         new BABYLON.Vector3(1, 1, 0),
         scene
       );
-      return light1;
+      var light2 = new BABYLON.PointLight(
+        "pointLight",
+        new BABYLON.Vector3(1, 10, 1),
+        scene
+      );
+      light2.intensity = 0.15;
     },
     async createModel(scene, canvas) {
-      await BABYLON.SceneLoader.AppendAsync("", "1.gltf", scene, scene => {});
+      var newScene = await BABYLON.SceneLoader.AppendAsync("", "1.gltf", scene);
+      console.log(newScene.meshes);
+      var redMat = new BABYLON.StandardMaterial("redMat", scene);
+      redMat.diffuseColor = new BABYLON.Color3(0.9, 0.9, 0.9);
+      newScene.meshes.forEach(e => {
+        e.material = redMat;
+        e.material.backFaceCulling = false;
+      });
     },
     async createUx(scene) {
       // Create the 3D UI manager
@@ -251,17 +269,21 @@ export default {
             )
           );
           // set distance to the target
-          this.camera.radius = 10;
+          this.camera.radius = 5;
           // select
           this.currentSelection = button;
         });
       });
     },
     async refreshScene() {
+      // reset camera
       this.camera.setTarget(new BABYLON.Vector3.Zero());
       this.camera.radius = 60;
       this.camera.alpha = -Math.PI / 2;
       this.camera.beta = Math.PI / 3;
+
+      // reset selection
+      this.currentSelection = null;
     },
     async zoomPlus() {
       this.camera.radius -= 10;

@@ -24,7 +24,7 @@
         </v-card>
       </v-flex>
       <v-flex xs8 d-flex>
-        <router-view></router-view>
+        <router-view @updateuserlist="getUserListShow"></router-view>
       </v-flex>
     </v-layout>
     <v-dialog v-model="createUserDialog" persistent max-width="400px">
@@ -118,8 +118,10 @@ export default {
       });
     },
     async createUser() {
+      this.user.role = this.$route.params.group;
       await userService.createUser(this.user);
       this.getUserListShow();
+      this.createUserDialog = false;
     },
     showProfile() {}
   },
