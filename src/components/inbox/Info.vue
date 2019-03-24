@@ -156,6 +156,9 @@ export default {
     },
     async createScene() {
       var scene = new BABYLON.Scene(this.engine);
+      var url = "/img/scene.jpg";
+      var background = new BABYLON.Layer("back", url, scene);
+      background.isBackground = true;
       return scene;
     },
     async createCamera(scene, canvas) {
@@ -181,7 +184,13 @@ export default {
       return light1;
     },
     async createModel(scene, canvas) {
-      BABYLON.SceneLoader.AppendAsync("", "1.gltf", scene, scene => {});
+      var newScene = await BABYLON.SceneLoader.AppendAsync("", "1.gltf", scene);
+      var redMat = new BABYLON.StandardMaterial("redMat", scene);
+      redMat.diffuseColor = new BABYLON.Color3(0.9, 0.9, 0.9);
+      newScene.meshes.forEach(e => {
+        e.material = redMat;
+        e.material.backFaceCulling = false;
+      });
     },
     async createUx(scene) {
       // Create the 3D UI manager

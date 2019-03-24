@@ -1,4 +1,5 @@
 import basicService from "./BasicService";
+import deviceService from "./DeviceService";
 import message from "../utils/Message";
 import store from "../store/store";
 
@@ -37,6 +38,7 @@ class buildingService {
     });
     await this.getBlock();
     await this.getStorey();
+    deviceService.getDevice();
     message.snackbar(rspData.msg);
     return rspData;
   }
@@ -56,6 +58,7 @@ class buildingService {
       storeyId: storeyId
     });
     await this.getStorey();
+    deviceService.getDevice();
     message.snackbar(rspData.msg);
     return rspData;
   }

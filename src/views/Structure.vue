@@ -65,7 +65,7 @@ export default {
                         ]
                       },
                       {
-                        name: "PRIVATE LORA 协议",
+                        name: "LTE-m",
                         children: [
                           {
                             name: "1001"

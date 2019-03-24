@@ -113,11 +113,11 @@ export default {
           text: "3D 概览",
           route: "/glance"
         },
-        {
-          icon: "report",
-          text: "分析报告",
-          route: ""
-        },
+        // {
+        //   icon: "report",
+        //   text: "分析报告",
+        //   route: ""
+        // },
         { heading: "系统" },
         {
           icon: "line_style",
