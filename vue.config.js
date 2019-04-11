@@ -27,5 +27,13 @@ module.exports = {
         ws: false
       }
     }
-  }
+  },
+
+  publicPath: undefined,
+  outputDir: 'INSBIM',
+  assetsDir: undefined,
+  runtimeCompiler: undefined,
+  productionSourceMap: undefined,
+  parallel: undefined,
+  css: undefined
 };
