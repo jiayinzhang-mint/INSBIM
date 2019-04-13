@@ -5,7 +5,7 @@
         <v-layout>
           <v-flex xs12>
             <v-toolbar flat class="transparent">
-              <v-btn icon>
+              <v-btn icon :to="'/inbox'">
                 <v-icon>arrow_back</v-icon>
               </v-btn>
               <v-toolbar-title>告警</v-toolbar-title>

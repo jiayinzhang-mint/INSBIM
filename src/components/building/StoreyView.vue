@@ -12,8 +12,6 @@
               <v-tabs slider-color="yellow" v-model="tab" centered>
                 <v-tabs-slider></v-tabs-slider>
                 <v-tab key="1">设备</v-tab>
-                <v-tab key="2">图纸</v-tab>
-                <v-tab key="3">模型</v-tab>
                 <v-tab key="4">设置</v-tab>
               </v-tabs>
             </v-card-title>
@@ -41,10 +39,16 @@
                   <template slot="items" slot-scope="props">
                     <td class="text-xs-center">{{ props.item.name }}</td>
                     <td class="text-xs-center">{{ props.item.type }}</td>
-                    <td class="text-xs-center">{{ props.item.coordinate }}</td>
+                    <td class="text-xs-center">{{ props.item.coordinate}}</td>
                     <td class="text-xs-center">
                       <v-tooltip left>
-                        <v-btn slot="activator" icon flat color="primary">
+                        <v-btn
+                          slot="activator"
+                          icon
+                          flat
+                          color="primary"
+                          @click="coordinateDialog=true;currentDevice=props.item"
+                        >
                           <v-icon>edit_location</v-icon>
                         </v-btn>
                         <span>编辑坐标</span>
@@ -69,8 +73,7 @@
             </v-flex>
           </v-layout>
         </v-tab-item>
-        <v-tab-item key="2"></v-tab-item>
-        <v-tab-item key="3"></v-tab-item>
+
         <v-tab-item key="4">
           <v-layout>
             <v-flex xs12>
@@ -78,7 +81,7 @@
                 <v-layout justify-center>
                   <v-flex xs12 md8>
                     <v-btn
-                      v-if="storey.floor == floorNum"
+                      :disabled="storey.floor != floorNum"
                       block
                       round
                       color="error darken-1"
@@ -160,6 +163,34 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="coordinateDialog" width="300">
+      <v-card>
+        <v-card-title class="dim-headline">编辑经纬度</v-card-title>
+        <v-container>
+          <v-form ref="coordinateForm">
+            <v-text-field
+              v-model="currentDevice.lng"
+              :rules="[v => !!v || '请填写经度']"
+              required
+              label="经度"
+            ></v-text-field>
+            <v-text-field
+              v-model="currentDevice.lat"
+              :rules="[v => !!v || '请填写纬度']"
+              required
+              label="纬度"
+            ></v-text-field>
+          </v-form>
+          <small>含*为必填项</small>
+        </v-container>
+        <v-card-actions>
+          <v-layout align-center justify-center>
+            <v-btn round flat @click="coordinateDialog = false">取消</v-btn>
+            <v-btn color="primary" round flat @click="updateDeviceCoordinate()">完成</v-btn>
+          </v-layout>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -177,6 +208,10 @@ export default {
       deviceListUngroup: [],
       tab: null,
       deviceDialog: false,
+      coordinateDialog: false,
+      currentDevice: {
+        coordinate: []
+      },
       deviceListHeader: [
         {
           text: "名称",
@@ -278,6 +313,22 @@ export default {
         this.$router.push({ path: "/building/" + this.block._id });
       } catch (err) {
         err;
+      }
+    },
+    async updateDeviceCoordinate() {
+      if (this.$refs.coordinateForm.validate()) {
+        try {
+          await deviceService.updateDevice({
+            deviceId: this.currentDevice._id,
+            coordinate: [this.currentDevice.lng, this.currentDevice.lat]
+          });
+          await deviceService.getDevice();
+          this.getDeviceList();
+
+          this.coordinateDialog = false;
+        } catch (err) {
+          err;
+        }
       }
     }
   },

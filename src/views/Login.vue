@@ -9,7 +9,7 @@
                 <v-flex md6 class="hidden-sm-and-down">
                   <v-parallax dark src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg">
                     <v-layout align-center column justify-center>
-                      <h1 class="display-2 font-weight-light mb-3">INSBIM</h1>
+                      <h1 class="display-2 font-weight-light mb-3">INSBIM Preview</h1>
                       <h4 class="body-2">
                         Powered By INSDIM
                         <span class="caption">&reg;</span>
@@ -60,6 +60,19 @@
         </v-layout>
       </v-container>
     </v-content>
+    <v-dialog v-model="hello" persistent width="500">
+      <v-card>
+        <v-card-title class="subheading font-weight-bold">
+          提示
+          <v-spacer></v-spacer>
+          <v-btn icon @click="hello=false">
+            <v-icon>clear</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-card-text class="subheading">本系统仅供测试使用，不包含任何真实数据。</v-card-text>
+        <v-card-text class="subheading">点击“登录”即可进入系统。</v-card-text>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
@@ -71,8 +84,9 @@ import userService from "../service/UserService";
 export default {
   data() {
     return {
-      username: "",
-      password: ""
+      username: "mint",
+      password: "almost@INSBIM",
+      hello: true
     };
   },
   methods: {

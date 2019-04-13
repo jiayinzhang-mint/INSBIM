@@ -73,12 +73,12 @@
         <span class="dim-subtitle">| {{name}}</span>
       </span>
       <v-spacer></v-spacer>
-      <v-btn icon class="ml-3">
+      <!-- <v-btn icon class="ml-3">
         <v-icon>notifications</v-icon>
       </v-btn>
       <v-btn icon>
         <v-icon>help_outline</v-icon>
-      </v-btn>
+      </v-btn>-->
     </v-toolbar>
 
     <v-content>
@@ -138,12 +138,12 @@ export default {
           icon: "person",
           text: "用户管理",
           route: "/user"
-        },
-        {
-          icon: "settings",
-          text: "用户设置",
-          route: "/profile"
         }
+        // {
+        //   icon: "settings",
+        //   text: "用户设置",
+        //   route: "/profile"
+        // }
       ],
       userMenu: [
         {
