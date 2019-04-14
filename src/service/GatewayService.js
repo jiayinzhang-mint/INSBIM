@@ -1,5 +1,5 @@
 import basicService from "./BasicService";
-import message from "../utils/Message.js";
+import message from "../utils/Message";
 import store from "../store/store";
 
 class gatewayService {
@@ -9,10 +9,9 @@ class gatewayService {
     });
     return rspData;
   }
-  static async updateSetting(key, setting) {
-    const rspData = await basicService.putRequest("/gateway", {
-      key: key,
-      setting: setting
+  static async pushSetting(value) {
+    const rspData = await basicService.postRequest("/gateway", {
+      value: value
     });
     message.snackbar(rspData.msg);
     return rspData;

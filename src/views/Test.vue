@@ -22,9 +22,7 @@
               <v-card-title>
                 <span class="dim-headline">Redis</span>
                 <v-spacer></v-spacer>
-                <v-btn icon>
-                  <v-icon>save</v-icon>
-                </v-btn>
+                <v-btn flat round @click="pushSetting">PUSH</v-btn>
               </v-card-title>
               <v-container>
                 <v-textarea label="Redis" box v-model="redisContent"></v-textarea>
@@ -40,9 +38,6 @@
               <v-card-title>
                 <span class="dim-headline">Node.json</span>
                 <v-spacer></v-spacer>
-                <v-btn icon @click="updateNode()">
-                  <v-icon>save</v-icon>
-                </v-btn>
               </v-card-title>
               <v-container>
                 <v-textarea label="Node.json" height="1000" box v-model="nodeContent"></v-textarea>
@@ -58,9 +53,6 @@
               <v-card-title>
                 <span class="dim-headline">Lora.json</span>
                 <v-spacer></v-spacer>
-                <v-btn icon @click="updateLora">
-                  <v-icon>save</v-icon>
-                </v-btn>
               </v-card-title>
               <v-container>
                 <v-textarea label="Lora.json" height="1000" box v-model="loraContent"></v-textarea>
@@ -78,7 +70,7 @@ import gatewayService from "../service/GatewayService";
 export default {
   data() {
     return {
-      tab: 1,
+      tab: 0,
       redisContent: "",
       nodeContent: "",
       loraContent: ""
@@ -89,11 +81,8 @@ export default {
       const rsp = await gatewayService.getSetting(key);
       return JSON.stringify(rsp.data, null, 2);
     },
-    async updateNode() {
-      const rsp = await gatewayService.updateSetting("node", this.nodeContent);
-    },
-    async updateLora() {
-      const rsp = await gatewayService.updateSetting("lora", this.loraContent);
+    async pushSetting() {
+      const rsp = await gatewayService.pushSetting(this.redisContent);
     }
   },
   async mounted() {

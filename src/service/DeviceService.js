@@ -1,5 +1,5 @@
 import basicService from "./BasicService";
-import message from "../utils/Message.js";
+import message from "../utils/Message";
 import store from "../store/store";
 
 class deviceService {
