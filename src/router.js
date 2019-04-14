@@ -112,6 +112,11 @@ export default new Router({
           path: "/structure",
           meta: "系统拓扑",
           component: () => import("./views//Structure")
+        },
+        {
+          path: "/test",
+          meta: "系统测试",
+          component: () => import("./views/Test")
         }
       ]
     }

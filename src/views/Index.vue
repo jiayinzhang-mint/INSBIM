@@ -138,12 +138,12 @@ export default {
           icon: "person",
           text: "用户管理",
           route: "/user"
+        },
+        {
+          icon: "build",
+          text: "系统测试",
+          route: "/test"
         }
-        // {
-        //   icon: "settings",
-        //   text: "用户设置",
-        //   route: "/profile"
-        // }
       ],
       userMenu: [
         {
