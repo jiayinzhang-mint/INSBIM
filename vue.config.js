@@ -19,7 +19,6 @@ module.exports = {
       );
     }
   },
-
   devServer: {
     proxy: {
       "/": {
@@ -28,9 +27,8 @@ module.exports = {
       }
     }
   },
-
   publicPath: undefined,
-  outputDir: 'INSBIM',
+  outputDir: "INSBIM",
   assetsDir: undefined,
   runtimeCompiler: undefined,
   productionSourceMap: undefined,

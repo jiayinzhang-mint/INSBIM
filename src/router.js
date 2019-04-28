@@ -69,7 +69,7 @@ export default new Router({
           children: [
             {
               path: "/device/sensor",
-              meta: "传感器管理",
+              meta: "设备管理",
               component: () => import("./components/device/SensorManage")
             }
           ]

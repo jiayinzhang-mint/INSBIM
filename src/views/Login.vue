@@ -60,19 +60,6 @@
         </v-layout>
       </v-container>
     </v-content>
-    <v-dialog v-model="hello" persistent width="500">
-      <v-card>
-        <v-card-title class="subheading font-weight-bold">
-          提示
-          <v-spacer></v-spacer>
-          <v-btn icon @click="hello=false">
-            <v-icon>clear</v-icon>
-          </v-btn>
-        </v-card-title>
-        <v-card-text class="subheading">本系统仅供测试使用，不包含任何真实数据。</v-card-text>
-        <v-card-text class="subheading">点击“登录”即可进入系统。</v-card-text>
-      </v-card>
-    </v-dialog>
   </v-app>
 </template>
 
@@ -86,7 +73,6 @@ export default {
     return {
       username: "mint",
       password: "almost@INSBIM",
-      hello: true
     };
   },
   methods: {
@@ -97,7 +83,7 @@ export default {
       await deviceService.getDevice();
       await userService.getUser();
       if (rspData.msg) {
-        this.$router.push({ path: "/dashboard" });
+        this.$router.push({ path: "/test" });
       }
     }
   },

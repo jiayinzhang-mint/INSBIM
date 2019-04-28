@@ -96,34 +96,34 @@ export default {
       drawer: true,
       name: "",
       menu: [
-        { heading: "通用" },
-        {
-          icon: "dashboard",
-          text: "仪表板",
-          route: "/dashboard"
-        },
-        {
-          icon: "inbox",
-          text: "收件箱",
-          route: "/inbox"
-        },
-        { heading: "运行" },
-        {
-          icon: "3d_rotation",
-          text: "3D 概览",
-          route: "/glance"
-        },
+        // { heading: "通用" },
+        // {
+        //   icon: "dashboard",
+        //   text: "仪表板",
+        //   route: "/dashboard"
+        // },
+        // {
+        //   icon: "inbox",
+        //   text: "收件箱",
+        //   route: "/inbox"
+        // },
+        // { heading: "运行" },
+        // {
+        //   icon: "3d_rotation",
+        //   text: "3D 概览",
+        //   route: "/glance"
+        // },
         // {
         //   icon: "report",
         //   text: "分析报告",
         //   route: ""
         // },
         { heading: "系统" },
-        {
-          icon: "line_style",
-          text: "系统拓扑",
-          route: "/structure"
-        },
+        // {
+        //   icon: "line_style",
+        //   text: "系统拓扑",
+        //   route: "/structure"
+        // },
         {
           icon: "domain",
           text: "楼宇管理",
@@ -134,11 +134,11 @@ export default {
           text: "设备仓库",
           route: "/device"
         },
-        {
-          icon: "person",
-          text: "用户管理",
-          route: "/user"
-        },
+        // {
+        //   icon: "person",
+        //   text: "用户管理",
+        //   route: "/user"
+        // },
         {
           icon: "build",
           text: "系统测试",
