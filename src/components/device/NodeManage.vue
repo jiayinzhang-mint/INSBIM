@@ -95,9 +95,14 @@
               <td class="text-xs-center">{{ props.item.dataFrequency }}</td>
               <td class="text-xs-center">{{ props.item.MinValue }}</td>
               <td class="text-xs-center">{{ props.item.MaxValue }}</td>
-              <td class="text-xs-center">{{ props.item.loraType }}</td>
+              <td class="text-xs-center">{{ props.item.nodeType }}</td>
               <td class="text-xs-center">
-                <v-btn flat icon color="primary" @click="updateNodeDialog=true;">
+                <v-btn
+                  flat
+                  icon
+                  color="primary"
+                  @click="updateNodeDialog=true;nodeConf = props.item"
+                >
                   <v-icon>edit</v-icon>
                 </v-btn>
                 <v-btn flat icon color="error" @click="deleteNode(props.item.nodeAddr)">
