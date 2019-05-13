@@ -1,20 +1,21 @@
 .dim-headline {
   font-size: 18px;
-  font-weight: 600
+  font-weight: 600;
+  margin-left: 10px;
 }
 
 .dim-title {
   font-size: 20px;
-  font-weight: 600
+  font-weight: 600;
 }
 
 .dim-subtitle {
   font-weight: 400;
-  color: rgb(168, 168, 168)
+  color: rgb(168, 168, 168);
 }
 
 .dim-side-icon {
-  font-size: 20px
+  font-size: 20px;
 }
 
 .v-card {
@@ -23,7 +24,7 @@
 }
 
 .v-card.v-card--flat {
-  box-shadow: none
+  box-shadow: none;
 }
 
 .clickable {
@@ -34,35 +35,36 @@
 
 .v-tooltip__content {
   background: #212121;
-  border-radius: 5px
+  border-radius: 5px;
 }
 
-.theme--light.v-table, .theme--light.v-datatable .v-datatable__actions {
-  background-color: transparent
+.theme--light.v-table,
+.theme--light.v-datatable .v-datatable__actions {
+  background-color: transparent;
 }
 
 .container {
   max-width: 100%;
-  padding: 10px 24px
+  padding: 10px 24px;
 }
 
 .theme--light.v-table thead tr:first-child {
-  border-bottom: none
+  border-bottom: none;
 }
 
 .theme--light.v-table tbody tr:not(:last-child) {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05)
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .theme--light.v-divider {
-  border-color: rgba(0, 0, 0, 0.05)
+  border-color: rgba(0, 0, 0, 0.05);
 }
 
 .theme--dark.v-table {
-  background-color: transparent
+  background-color: transparent;
 }
 
 .storeylist {
   height: calc(100vh - 85px);
-  overflow: auto
+  overflow: auto;
 }

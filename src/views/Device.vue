@@ -4,9 +4,9 @@
       <v-toolbar class="transparent" flat>
         <v-text-field v-model="search" append-icon="search" label="搜索" single-line hide-details></v-text-field>
         <v-spacer></v-spacer>
-        <!-- <v-btn flat round color="primary" @click="createDeviceDialog=true">
-        <v-icon>add</v-icon>新增
-        </v-btn>-->
+        <v-btn flat round color="primary" @click="createDeviceDialog=true">
+          <v-icon>add</v-icon>新增
+        </v-btn>
         <v-btn flat round color="primary" @click="refreshDevice">
           <v-icon>refresh</v-icon>刷新
         </v-btn>
@@ -68,6 +68,8 @@
                   <v-select
                     :items="typeList"
                     required
+                    item-text="label"
+                    item-value="value"
                     no-data-text="通信格式"
                     label="通信格式*"
                     :rules="[v => !!v || '请选择通信格式']"
@@ -140,16 +142,16 @@ export default {
       file: null,
       loading: false,
       // dynamic feature ?
-      typeList: ["TCP", "UDP"],
+      typeList: [{ label: "UDP", value: 0 }, { label: "TCP", value: 1 }],
       deviceHeader: [
         {
-          text: "lora地址",
+          text: "网关地址",
           value: "loraAddr",
           align: "center",
           sortable: false
         },
         {
-          text: "server地址",
+          text: "服务器地址",
           value: "serverAddr",
           align: "center",
           sortable: false

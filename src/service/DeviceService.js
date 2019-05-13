@@ -9,6 +9,13 @@ class deviceService {
     return rspData;
   }
 
+  static async getDeviceInfo(loraAddr) {
+    const rspData = await basicService.getRequest("/lora", {
+      loraAddr: loraAddr
+    });
+    return rspData;
+  }
+
   static async getNode(loraAddr) {
     const rspData = await basicService.getRequest("/node", {
       loraAddr: loraAddr

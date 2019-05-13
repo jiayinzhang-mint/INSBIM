@@ -11,20 +11,68 @@
           </v-card-title>
         </v-card>
       </v-flex>
-      <v-flex xs12>
+      <v-flex xs6>
         <v-card>
-          <v-btn flat @click="checkTime">校准时间</v-btn>
+          <v-card-title class="dim-headline">
+            网关设置
+            <v-spacer></v-spacer>
+            <v-btn flat color="primary" @click="updateLoraConf">
+              <v-icon>save</v-icon>&nbsp;保存
+            </v-btn>
+          </v-card-title>
+          <v-container>
+            <v-form ref="loraConfForm">
+              <v-text-field
+                label="网关地址*"
+                :rules="[v => !!v || '请填写名称']"
+                v-model="lora.loraAddr"
+                required
+              ></v-text-field>
+              <v-select
+                :items="typeList"
+                item-text="label"
+                item-value="value"
+                required
+                no-data-text="通信格式"
+                label="通信格式*"
+                :rules="[v => !!v || '请选择通信格式']"
+                v-model="lora.commType"
+              ></v-select>
+              <v-text-field
+                label="服务器地址*"
+                :rules="[v => !!v || '请填写名称']"
+                v-model="lora.serverAddr"
+                required
+              ></v-text-field>
+              <v-text-field
+                label="心跳周期*"
+                :rules="[v => !!v || '请填写名称']"
+                v-model="lora.heartCycle"
+                required
+              ></v-text-field>
+              <v-text-field label="端口*" :rules="[v => !!v || '请填写名称']" v-model="lora.port" required></v-text-field>
+            </v-form>
+          </v-container>
+        </v-card>
+      </v-flex>
+      <v-flex xs6 d-flex>
+        <v-card>
+          <v-card-title class="dim-headline">
+            其他设置
+            <v-spacer></v-spacer>
+            <v-btn round flat color="primary" @click="checkTime">校准时间</v-btn>
+          </v-card-title>
         </v-card>
       </v-flex>
       <v-flex xs12>
         <v-card>
           <v-card-title class="dim-headline">
-            设备列表
+            节点列表
             <v-spacer></v-spacer>
             <v-btn flat round color="primary" @click="createNodeDialog=true">
               <v-icon>add</v-icon>新增
             </v-btn>
-            <v-btn flat round color="primary" @click="refreshNode">
+            <v-btn flat round color="primary" @click="getNodeList">
               <v-icon>refresh</v-icon>刷新
             </v-btn>
           </v-card-title>
@@ -40,7 +88,7 @@
           >
             <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
             <template slot="items" slot-scope="props">
-              <td class="text-xs-center">{{ props.item.nodeAddr }}</td>
+              <td class="text-xs-center">{{ props.item.node_id }}</td>
               <td class="text-xs-center">{{ props.item.reportFrequency }}</td>
               <td class="text-xs-center">{{ props.item.calibrationValue }}</td>
               <td class="text-xs-center">{{ props.item.voltFrequency }}</td>
@@ -49,7 +97,10 @@
               <td class="text-xs-center">{{ props.item.MaxValue }}</td>
               <td class="text-xs-center">{{ props.item.loraType }}</td>
               <td class="text-xs-center">
-                <v-btn flat icon color="error">
+                <v-btn flat icon color="primary" @click="updateNodeDialog=true;">
+                  <v-icon>edit</v-icon>
+                </v-btn>
+                <v-btn flat icon color="error" @click="deleteNode(props.item.nodeAddr)">
                   <v-icon>delete</v-icon>
                 </v-btn>
               </td>
@@ -70,9 +121,9 @@
               <v-flex xs12>
                 <v-form ref="createNodeForm">
                   <v-text-field
-                    label="node地址*"
+                    label="节点地址*"
                     :rules="[v => !!v || '请填写名称']"
-                    v-model="node.nodeAddr"
+                    v-model="node.node_id"
                     required
                   ></v-text-field>
                 </v-form>
@@ -85,6 +136,84 @@
           <v-layout align-center justify-center>
             <v-btn round flat @click="createNodeDialog = false">取消</v-btn>
             <v-btn round color="primary" flat @click="createNode">确认</v-btn>
+          </v-layout>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="updateNodeDialog" persistent max-width="400px">
+      <v-card>
+        <v-card-title>
+          <span class="dim-headline">更新节点</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container grid-list-md>
+            <v-layout wrap>
+              <v-flex xs12>
+                <v-form ref="updateNodeForm">
+                  <v-text-field
+                    label="节点地址*"
+                    :rules="[v => !!v || '请填写名称']"
+                    v-model="node.node_id"
+                    required
+                  ></v-text-field>
+                  <v-select
+                    :items="nodeType"
+                    required
+                    item-text="label"
+                    item-value="value"
+                    no-data-text="节点类型"
+                    label="节点类型*"
+                    :rules="[v => !!v || '请选择节点类型']"
+                    v-model="node.nodeType"
+                  ></v-select>
+                  <v-select
+                    :items="reportFrequency"
+                    required
+                    no-data-text="上报频率"
+                    label="上报频率*"
+                    :rules="[v => !!v || '请选择上报频率']"
+                    v-model="node.reportFrequency"
+                  ></v-select>
+                  <v-text-field
+                    label="校准值*"
+                    :rules="[v => !!v || '请填写名称']"
+                    v-model="node.calibrationValue"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    label="电量告警频率*"
+                    :rules="[v => !!v || '请填写名称']"
+                    v-model="node.voltFrequency"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    label="电压告警频率*"
+                    :rules="[v => !!v || '请填写名称']"
+                    v-model="node.dataFrequency"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    label="最大阈值*"
+                    :rules="[v => !!v || '请填写名称']"
+                    v-model="node.MaxValue"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    label="最小阈值*"
+                    :rules="[v => !!v || '请填写名称']"
+                    v-model="node.MinValue"
+                    required
+                  ></v-text-field>
+                </v-form>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-layout align-center justify-center>
+            <v-btn round flat @click="updateNodeDialog = false">取消</v-btn>
+            <v-btn round color="primary" flat @click="updateNode">确认</v-btn>
           </v-layout>
         </v-card-actions>
       </v-card>
@@ -102,12 +231,33 @@ export default {
       loading: false,
       search: "",
       createNodeDialog: false,
-      node: {
-        nodeAddr: ""
+      updateNodeDialog: false,
+      lora: {
+        loraAddr: "",
+        commType: "",
+        serverAddr: "",
+        port: "",
+        heartCycle: ""
       },
+      typeList: [{ label: "UDP", value: 0 }, { label: "TCP", value: 1 }],
+      node: {
+        node_id: ""
+      },
+      nodeConf: {
+        node_id: "",
+        nodeType: "",
+        reportFrequency: "",
+        calibrationValue: "",
+        voltFrequency: "",
+        dataFrequency: "",
+        MaxValue: "",
+        MinValue: ""
+      },
+      nodeType: [{ value: "01", label: "水压" }],
+      reportFrequency: [0, 1, 2, 3],
       nodeHeader: [
         {
-          text: "node地址",
+          text: "节点地址",
           align: "center",
           sortable: false
         },
@@ -146,7 +296,7 @@ export default {
           align: "center",
           sortable: false
         },
-         {
+        {
           text: "操作",
           align: "center",
           sortable: false
@@ -159,18 +309,31 @@ export default {
     goBack() {
       this.$router.go(-1);
     },
-    async refreshNode() {
+    async getNodeList() {
       const rsp = await deviceService.getNode(this.$route.params.loraAddr);
       this.nodeList = rsp.data.nodeList;
     },
-    async checkTime() {
-      const rsp = await gatewayService.pushSetting(
-        JSON.stringify({
-          type: "lora",
-          state: "00",
-          loraAddr: this.$route.params.loraAddr
-        })
+    async getLoraInfo() {
+      const rsp = await deviceService.getDeviceInfo(
+        this.$route.params.loraAddr
       );
+      this.lora = rsp.data.loraList[0];
+      this.lora.commType = parseInt(this.lora.commType);
+      console.log(this.lora.commType);
+    },
+    async checkTime() {
+      try {
+        await this.$confirm("确认校准时间吗？", "本操作无法恢复。");
+        const rsp = await gatewayService.pushSetting(
+          JSON.stringify({
+            type: "lora",
+            state: "00",
+            loraAddr: this.$route.params.loraAddr
+          })
+        );
+      } catch (err) {
+        return err;
+      }
     },
     async createNode() {
       if (this.$refs.createNodeForm.validate()) {
@@ -180,14 +343,72 @@ export default {
             state: "01",
             loraAddr: this.$route.params.loraAddr,
             number: 1,
-            node_list: [this.node.nodeAddr]
+            node_list: [this.node.node_id]
           })
         );
+        this.createNodeDialog = false;
       }
+    },
+    async updateNode() {
+      if (this.$refs.updateNodeForm.validate()) {
+        const rsp = await gatewayService.pushSetting(
+          JSON.stringify({
+            type: "lora",
+            state: "04",
+            loraAddr: this.$route.params.loraAddr,
+            node_id: this.node.node_id,
+            nodeType: this.node.nodeType,
+            reportFrequency: this.node.reportFrequency,
+            calibrationValue: this.node.calibrationValue,
+            voltFrequency: this.node.voltFrequency,
+            dataFrequency: this.node.dataFrequency,
+            MaxValue: this.node.MaxValue,
+            MinValue: this.node.MinValue
+          })
+        );
+        this.updateNodeDialog = false;
+      }
+    },
+    async deleteNode(nodeAddr) {
+      try {
+        await this.$confirm("确认删除吗？", "本操作无法恢复。");
+        const rsp = await gatewayService.pushSetting(
+          JSON.stringify({
+            type: "lora",
+            state: "02",
+            loraAddr: this.$route.params.loraAddr,
+            number: 1,
+            node_list: [nodeAddr]
+          })
+        );
+      } catch (err) {
+        return err;
+      }
+    },
+    async updateLoraConf() {
+      await gatewayService.pushSetting(
+        JSON.stringify({
+          type: "lora",
+          state: "06",
+          loraAddr: this.$route.params.loraAddr,
+          heartCycle: this.lora.heartCycle
+        })
+      );
+      await gatewayService.pushSetting(
+        JSON.stringify({
+          type: "lora",
+          state: "08",
+          loraAddr: this.$route.params.loraAddr,
+          commType: this.lora.commType,
+          serverAddr: this.lora.serverAddr,
+          port: this.lora.port
+        })
+      );
     }
   },
   mounted() {
-    this.refreshNode();
+    this.getNodeList();
+    this.getLoraInfo();
   }
 };
 </script>
