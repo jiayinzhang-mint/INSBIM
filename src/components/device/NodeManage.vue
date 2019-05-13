@@ -158,7 +158,7 @@
                   <v-text-field
                     label="节点地址*"
                     :rules="[v => !!v || '请填写名称']"
-                    v-model="node.node_id"
+                    v-model="nodeConf.node_id"
                     required
                   ></v-text-field>
                   <v-select
@@ -169,7 +169,7 @@
                     no-data-text="节点类型"
                     label="节点类型*"
                     :rules="[v => !!v || '请选择节点类型']"
-                    v-model="node.nodeType"
+                    v-model="nodeConf.nodeType"
                   ></v-select>
                   <v-select
                     :items="reportFrequency"
@@ -177,36 +177,36 @@
                     no-data-text="上报频率"
                     label="上报频率*"
                     :rules="[v => !!v || '请选择上报频率']"
-                    v-model="node.reportFrequency"
+                    v-model="nodeConf.reportFrequency"
                   ></v-select>
                   <v-text-field
                     label="校准值*"
                     :rules="[v => !!v || '请填写名称']"
-                    v-model="node.calibrationValue"
+                    v-model="nodeConf.calibrationValue"
                     required
                   ></v-text-field>
                   <v-text-field
                     label="电量告警频率*"
                     :rules="[v => !!v || '请填写名称']"
-                    v-model="node.voltFrequency"
+                    v-model="nodeConf.voltFrequency"
                     required
                   ></v-text-field>
                   <v-text-field
                     label="电压告警频率*"
                     :rules="[v => !!v || '请填写名称']"
-                    v-model="node.dataFrequency"
+                    v-model="nodeConf.dataFrequency"
                     required
                   ></v-text-field>
                   <v-text-field
                     label="最大阈值*"
                     :rules="[v => !!v || '请填写名称']"
-                    v-model="node.MaxValue"
+                    v-model="nodeConf.MaxValue"
                     required
                   ></v-text-field>
                   <v-text-field
                     label="最小阈值*"
                     :rules="[v => !!v || '请填写名称']"
-                    v-model="node.MinValue"
+                    v-model="nodeConf.MinValue"
                     required
                   ></v-text-field>
                 </v-form>
@@ -361,14 +361,14 @@ export default {
             type: "lora",
             state: "04",
             loraAddr: this.$route.params.loraAddr,
-            node_id: this.node.node_id,
-            nodeType: this.node.nodeType,
-            reportFrequency: this.node.reportFrequency,
-            calibrationValue: this.node.calibrationValue,
-            voltFrequency: this.node.voltFrequency,
-            dataFrequency: this.node.dataFrequency,
-            MaxValue: this.node.MaxValue,
-            MinValue: this.node.MinValue
+            node_id: this.nodeConf.node_id,
+            nodeType: this.nodeConf.nodeType,
+            reportFrequency: this.nodeConf.reportFrequency,
+            calibrationValue: this.nodeConf.calibrationValue,
+            voltFrequency: this.nodeConf.voltFrequency,
+            dataFrequency: this.nodeConf.dataFrequency,
+            MaxValue: this.nodeConf.MaxValue,
+            MinValue: this.nodeConf.MinValue
           })
         );
         this.updateNodeDialog = false;
