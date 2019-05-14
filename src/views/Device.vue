@@ -191,6 +191,7 @@ export default {
         await gatewayService.pushSetting(
           JSON.stringify({
             type: "lora",
+            state: 11,
             loraAddr: this.device.loraAddr,
             commType: this.device.commType,
             heartCycle: this.device.heartCycle,
