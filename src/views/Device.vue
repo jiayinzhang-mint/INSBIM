@@ -187,7 +187,17 @@ export default {
     async createDevice() {
       if (this.$refs.createDeviceForm.validate()) {
         this.loading = true;
-        await gatewayService.pushSetting(JSON.stringify(this.device));
+
+        await gatewayService.pushSetting(
+          JSON.stringify({
+            type: "lora",
+            loraAddr: this.device.loraAddr,
+            commType: this.device.commType,
+            heartCycle: this.device.heartCycle,
+            port: this.device.port,
+            serverAddr: this.device.serverAddr
+          })
+        );
         this.device = {};
         this.createDeviceDialog = false;
         this.loading = false;
