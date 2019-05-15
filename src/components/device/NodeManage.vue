@@ -14,43 +14,69 @@
       <v-flex xs6>
         <v-card>
           <v-card-title class="dim-headline">
-            网关设置
+            基本参数
             <v-spacer></v-spacer>
-            <v-btn flat color="primary" @click="updateLoraConf">
+            <v-btn round flat color="primary" @click="updateNode()">
               <v-icon>save</v-icon>&nbsp;保存
             </v-btn>
           </v-card-title>
           <v-container>
-            <v-form ref="loraConfForm">
+            <v-form ref="updateNodeForm">
               <v-text-field
-                label="网关地址*"
+                label="节点地址*"
                 :rules="[v => !!v || '请填写名称']"
-                v-model="lora.loraAddr"
+                v-model="nodeConf.node_id"
                 required
+                disabled
               ></v-text-field>
               <v-select
-                :items="typeList"
+                :items="node_type"
+                required
                 item-text="label"
                 item-value="value"
+                no-data-text="节点类型"
+                label="节点类型*"
+                :rules="[v => !!v || '请选择节点类型']"
+                v-model="nodeConf.node_type"
+              ></v-select>
+              <v-select
+                :items="reportFrequency"
                 required
-                no-data-text="通信格式"
-                label="通信格式*"
-                :rules="[v => !!v || '请选择通信格式']"
-                v-model="lora.commType"
+                no-data-text="上报频率"
+                label="上报频率*"
+                :rules="[v => !!v || '请选择上报频率']"
+                v-model="nodeConf.reportFrequency"
               ></v-select>
               <v-text-field
-                label="服务器地址*"
+                label="校准值*"
                 :rules="[v => !!v || '请填写名称']"
-                v-model="lora.serverAddr"
+                v-model="nodeConf.calibrationValue"
                 required
               ></v-text-field>
               <v-text-field
-                label="心跳周期*"
+                label="电量告警频率*"
                 :rules="[v => !!v || '请填写名称']"
-                v-model="lora.heartCycle"
+                v-model="nodeConf.voltFrequency"
                 required
               ></v-text-field>
-              <v-text-field label="端口*" :rules="[v => !!v || '请填写名称']" v-model="lora.port" required></v-text-field>
+              <v-text-field
+                label="电压告警频率*"
+                :rules="[v => !!v || '请填写名称']"
+                v-model="nodeConf.dataFrequency"
+                required
+              ></v-text-field>
+              <v-text-field
+                label="最大阈值*"
+                :rules="[v => !!v || '请填写名称']"
+                v-model="nodeConf.MaxValue"
+                required
+              ></v-text-field>
+              <v-text-field
+                label="最小阈值*"
+                :rules="[v => !!v || '请填写名称']"
+                v-model="nodeConf.MinValue"
+                required
+              ></v-text-field>
             </v-form>
           </v-container>
         </v-card>
@@ -58,301 +84,90 @@
       <v-flex xs6 d-flex>
         <v-card>
           <v-card-title class="dim-headline">
-            其他设置
+            位置参数
             <v-spacer></v-spacer>
-            <v-btn round flat color="primary" @click="checkTime">校准时间</v-btn>
-          </v-card-title>
-        </v-card>
-      </v-flex>
-      <v-flex xs12>
-        <v-card>
-          <v-card-title class="dim-headline">
-            节点列表
-            <v-spacer></v-spacer>
-            <v-btn flat round color="primary" @click="createNodeDialog=true">
-              <v-icon>add</v-icon>新增
-            </v-btn>
-            <v-btn flat round color="primary" @click="getNodeList">
-              <v-icon>refresh</v-icon>刷新
+            <v-btn round flat color="primary" @click="updateNodeInfo()">
+              <v-icon>save</v-icon>&nbsp;保存
             </v-btn>
           </v-card-title>
-          <v-data-table
-            rows-per-page-text="每页项数"
-            :rows-per-page-items="rowsPerPageItems"
-            :search="search"
-            no-data-text="暂无数据"
-            no-results-text="无结果"
-            :headers="nodeHeader"
-            :items="nodeList"
-            :loading="loading"
-          >
-            <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
-            <template slot="items" slot-scope="props">
-              <td class="text-xs-center">{{ props.item.node_id }}</td>
-              <td class="text-xs-center">{{ props.item.reportFrequency }}</td>
-              <td class="text-xs-center">{{ props.item.calibrationValue }}</td>
-              <td class="text-xs-center">{{ props.item.voltFrequency }}</td>
-              <td class="text-xs-center">{{ props.item.dataFrequency }}</td>
-              <td class="text-xs-center">{{ props.item.MinValue }}</td>
-              <td class="text-xs-center">{{ props.item.MaxValue }}</td>
-              <td class="text-xs-center">{{ props.item.nodeType }}</td>
-              <td class="text-xs-center">
-                <v-btn
-                  flat
-                  icon
-                  color="primary"
-                  @click="updateNodeDialog=true;nodeConf = props.item"
-                >
-                  <v-icon>edit</v-icon>
-                </v-btn>
-                <v-btn flat icon color="error" @click="deleteNode(props.item.nodeAddr)">
-                  <v-icon>delete</v-icon>
-                </v-btn>
-              </td>
-            </template>
-            <template slot="pageText" slot-scope="props">共 {{ props.itemsLength }} 项</template>
-          </v-data-table>
+          <v-container>
+            <v-form ref="updateNodeInfoForm">
+              <v-text-field label="厂商" v-model="nodeConf.company"></v-text-field>
+              <v-select
+                :items="blockList"
+                no-data-text="楼宇"
+                item-text="name"
+                item-value="_id"
+                label="楼宇"
+                v-model="nodeConf.building_num"
+              ></v-select>
+              <v-select
+                v-if="nodeConf.building_num"
+                :items="storeyListShow.item"
+                item-text="floor"
+                item-value="_id"
+                label="楼层"
+                v-model="nodeConf.floor"
+              ></v-select>
+              <v-text-field label="经度" v-model="nodeConf.gis.lng"></v-text-field>
+              <v-text-field label="纬度" v-model="nodeConf.gis.lat"></v-text-field>
+              <v-text-field label="高度" v-model="nodeConf.gis.alt"></v-text-field>
+              <v-text-field label="GIS类型" v-model="nodeConf.gis.gis_type"></v-text-field>
+            </v-form>
+          </v-container>
         </v-card>
       </v-flex>
     </v-layout>
-    <v-dialog v-model="createNodeDialog" persistent max-width="400px">
-      <v-card>
-        <v-card-title>
-          <span class="dim-headline">创建节点</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container grid-list-md>
-            <v-layout wrap>
-              <v-flex xs12>
-                <v-form ref="createNodeForm">
-                  <v-text-field
-                    label="节点地址*"
-                    :rules="[v => !!v || '请填写名称']"
-                    v-model="node.node_id"
-                    required
-                  ></v-text-field>
-                </v-form>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-card-text>
-
-        <v-card-actions>
-          <v-layout align-center justify-center>
-            <v-btn round flat @click="createNodeDialog = false">取消</v-btn>
-            <v-btn round color="primary" flat @click="createNode">确认</v-btn>
-          </v-layout>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <v-dialog v-model="updateNodeDialog" persistent max-width="400px">
-      <v-card>
-        <v-card-title>
-          <span class="dim-headline">更新节点</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container grid-list-md>
-            <v-layout wrap>
-              <v-flex xs12>
-                <v-form ref="updateNodeForm">
-                  <v-text-field
-                    label="节点地址*"
-                    :rules="[v => !!v || '请填写名称']"
-                    v-model="nodeConf.node_id"
-                    required
-                  ></v-text-field>
-                  <v-select
-                    :items="nodeType"
-                    required
-                    item-text="label"
-                    item-value="value"
-                    no-data-text="节点类型"
-                    label="节点类型*"
-                    :rules="[v => !!v || '请选择节点类型']"
-                    v-model="nodeConf.nodeType"
-                  ></v-select>
-                  <v-select
-                    :items="reportFrequency"
-                    required
-                    no-data-text="上报频率"
-                    label="上报频率*"
-                    :rules="[v => !!v || '请选择上报频率']"
-                    v-model="nodeConf.reportFrequency"
-                  ></v-select>
-                  <v-text-field
-                    label="校准值*"
-                    :rules="[v => !!v || '请填写名称']"
-                    v-model="nodeConf.calibrationValue"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    label="电量告警频率*"
-                    :rules="[v => !!v || '请填写名称']"
-                    v-model="nodeConf.voltFrequency"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    label="电压告警频率*"
-                    :rules="[v => !!v || '请填写名称']"
-                    v-model="nodeConf.dataFrequency"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    label="最大阈值*"
-                    :rules="[v => !!v || '请填写名称']"
-                    v-model="nodeConf.MaxValue"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    label="最小阈值*"
-                    :rules="[v => !!v || '请填写名称']"
-                    v-model="nodeConf.MinValue"
-                    required
-                  ></v-text-field>
-                </v-form>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-card-text>
-
-        <v-card-actions>
-          <v-layout align-center justify-center>
-            <v-btn round flat @click="updateNodeDialog = false">取消</v-btn>
-            <v-btn round color="primary" flat @click="updateNode">确认</v-btn>
-          </v-layout>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-container>
 </template>
 
 <script>
 import deviceService from "../../service/DeviceService";
 import gatewayService from "../../service/GatewayService";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      nodeList: [],
-      loading: false,
-      search: "",
-      createNodeDialog: false,
-      updateNodeDialog: false,
-      lora: {
-        loraAddr: "",
-        commType: "",
-        serverAddr: "",
-        port: "",
-        heartCycle: ""
-      },
-      typeList: [{ label: "UDP", value: 0 }, { label: "TCP", value: 1 }],
-      node: {
-        node_id: ""
-      },
       nodeConf: {
         node_id: "",
-        nodeType: "",
+        node_type: "",
         reportFrequency: "",
         calibrationValue: "",
         voltFrequency: "",
         dataFrequency: "",
         MaxValue: "",
-        MinValue: ""
-      },
-      nodeType: [{ value: "01", label: "水压" }],
-      reportFrequency: [0, 1, 2, 3],
-      nodeHeader: [
-        {
-          text: "节点地址",
-          align: "center",
-          sortable: false
-        },
-        {
-          text: "上报周期",
-          align: "center",
-          sortable: false
-        },
-        {
-          text: "校准值",
-          align: "center",
-          sortable: false
-        },
-        {
-          text: "电量告警周期",
-          align: "center",
-          sortable: false
-        },
-        {
-          text: "数据告警周期",
-          align: "center",
-          sortable: false
-        },
-        {
-          text: "告警最小阈值",
-          align: "center",
-          sortable: false
-        },
-        {
-          text: "告警最大阈值",
-          align: "center",
-          sortable: false
-        },
-        {
-          text: "节点类型",
-          align: "center",
-          sortable: false
-        },
-        {
-          text: "操作",
-          align: "center",
-          sortable: false
+        MinValue: "",
+        building_num: "",
+        company: "",
+        floor: "",
+        gis: {
+          lng: "",
+          lat: "",
+          alt: "",
+          gis_type: ""
         }
-      ],
-      rowsPerPageItems: [10, 25, { text: "全部", value: -1 }]
+      },
+      node_type: [{ value: "01", label: "水压" }],
+      reportFrequency: ["0", "1", "2", "3"],
+      storeyListShow: []
     };
   },
   methods: {
     goBack() {
       this.$router.go(-1);
     },
-    async getNodeList() {
-      const rsp = await deviceService.getNode(this.$route.params.loraAddr);
-      this.nodeList = rsp.data.nodeList;
-    },
-    async getLoraInfo() {
-      const rsp = await deviceService.getDeviceInfo(
-        this.$route.params.loraAddr
-      );
-      this.lora = rsp.data.loraList[0];
-      this.lora.commType = parseInt(this.lora.commType);
-      console.log(this.lora.commType);
-    },
-    async checkTime() {
-      try {
-        await this.$confirm("确认校准时间吗？", "本操作无法恢复。");
-        const rsp = await gatewayService.pushSetting(
-          JSON.stringify({
-            type: "lora",
-            state: "00",
-            loraAddr: this.$route.params.loraAddr
-          })
-        );
-      } catch (err) {
-        return err;
+    async getNodeInfo() {
+      const rsp = await deviceService.getNodeInfo(this.$route.params.node_id);
+      var nodeConf = rsp.data.nodeList[0];
+      if (!nodeConf.gis) {
+        nodeConf.gis = {
+          lng: "",
+          lat: "",
+          alt: "",
+          gis_type: ""
+        };
       }
-    },
-    async createNode() {
-      if (this.$refs.createNodeForm.validate()) {
-        const rsp = await gatewayService.pushSetting(
-          JSON.stringify({
-            type: "lora",
-            state: "01",
-            loraAddr: this.$route.params.loraAddr,
-            number: 1,
-            node_list: [this.node.node_id]
-          })
-        );
-        this.createNodeDialog = false;
-      }
+      this.nodeConf = nodeConf;
     },
     async updateNode() {
       if (this.$refs.updateNodeForm.validate()) {
@@ -361,8 +176,8 @@ export default {
             type: "lora",
             state: "04",
             loraAddr: this.$route.params.loraAddr,
-            node_id: this.nodeConf.node_id,
-            nodeType: this.nodeConf.nodeType,
+            node_id: this.$route.params.node_id,
+            node_type: this.nodeConf.node_type,
             reportFrequency: this.nodeConf.reportFrequency,
             calibrationValue: this.nodeConf.calibrationValue,
             voltFrequency: this.nodeConf.voltFrequency,
@@ -374,46 +189,43 @@ export default {
         this.updateNodeDialog = false;
       }
     },
-    async deleteNode(nodeAddr) {
-      try {
-        await this.$confirm("确认删除吗？", "本操作无法恢复。");
+    async updateNodeInfo() {
+      if (this.$refs.updateNodeInfoForm.validate()) {
         const rsp = await gatewayService.pushSetting(
           JSON.stringify({
             type: "lora",
-            state: "02",
+            state: "12",
             loraAddr: this.$route.params.loraAddr,
-            number: 1,
-            node_list: [nodeAddr]
+            node_id: this.$route.params.node_id,
+            building_num: this.nodeConf.building_num,
+            company: this.nodeConf.company,
+            floor: this.nodeConf.floor,
+            gis: this.nodeConf.gis
           })
         );
-      } catch (err) {
-        return err;
+        this.updateNodeDialog = false;
       }
     },
-    async updateLoraConf() {
-      await gatewayService.pushSetting(
-        JSON.stringify({
-          type: "lora",
-          state: "06",
-          loraAddr: this.$route.params.loraAddr,
-          heartCycle: this.lora.heartCycle
-        })
-      );
-      await gatewayService.pushSetting(
-        JSON.stringify({
-          type: "lora",
-          state: "08",
-          loraAddr: this.$route.params.loraAddr,
-          commType: this.lora.commType,
-          serverAddr: this.lora.serverAddr,
-          port: this.lora.port
-        })
-      );
+
+  },
+  watch: {
+    nodeConf: function(v) {
+      if (this.nodeConf.building_num) {
+        this.storeyListShow = this.storeyList.find(e => {
+          return e.key == this.nodeConf.building_num;
+        });
+        console.log(this.storeyListShow);
+      }
     }
   },
+  computed: {
+    ...mapGetters({
+      blockList: "building/blockList",
+      storeyList: "building/storeyList"
+    })
+  },
   mounted() {
-    this.getNodeList();
-    this.getLoraInfo();
+    this.getNodeInfo();
   }
 };
 </script>

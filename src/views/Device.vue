@@ -34,9 +34,9 @@
               <v-icon>settings</v-icon>
             </v-btn>
 
-            <!-- <v-btn flat icon color="error" @click="deleteDevice(props.item._id)">
-            <v-icon>delete</v-icon>
-            </v-btn>-->
+            <v-btn flat icon color="error" @click="deleteDevice(props.item.loraAddr)">
+              <v-icon>delete</v-icon>
+            </v-btn>
           </td>
         </template>
         <template slot="pageText" slot-scope="props">共 {{ props.itemsLength }} 项</template>
@@ -217,14 +217,21 @@ export default {
       this.importDeviceDialog = false;
       this.loading = false;
     },
-    async deleteDevice(id) {
+    async deleteDevice(loraAddr) {
       try {
-        await this.$confirm("确认删除?");
-        await deviceService.deleteDevice(id);
+        await this.$confirm("确认删除?", "本操作无法恢复。");
+        await gatewayService.pushSetting(
+          JSON.stringify({
+            type: "lora",
+            state: 10,
+            loraAddr: loraAddr
+          })
+        );
       } catch (err) {
         err;
       }
-    }
+    },
+
   },
   computed: {
     ...mapGetters({

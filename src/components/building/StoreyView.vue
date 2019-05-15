@@ -26,47 +26,20 @@
                 <v-toolbar flat color="transparent">
                   <v-toolbar-title class="dim-headline">本层设备</v-toolbar-title>
                   <v-spacer></v-spacer>
-                  <v-btn flat round color="primary" @click="deviceDialog=true">
+                  <!-- <v-btn flat round color="primary" @click="deviceDialog=true">
                     <v-icon>add</v-icon>添加设备
-                  </v-btn>
+                  </v-btn>-->
                 </v-toolbar>
                 <v-data-table
                   no-data-text="暂无数据"
                   hide-actions
                   :headers="deviceListHeader"
-                  :items="deviceListShow"
+                  :items="nodeList"
                 >
                   <template slot="items" slot-scope="props">
-                    <td class="text-xs-center">{{ props.item.name }}</td>
-                    <td class="text-xs-center">{{ props.item.type }}</td>
-                    <td class="text-xs-center">{{ props.item.coordinate}}</td>
-                    <td class="text-xs-center">
-                      <v-tooltip left>
-                        <v-btn
-                          slot="activator"
-                          icon
-                          flat
-                          color="primary"
-                          @click="coordinateDialog=true;currentDevice=props.item"
-                        >
-                          <v-icon>edit_location</v-icon>
-                        </v-btn>
-                        <span>编辑坐标</span>
-                      </v-tooltip>
-
-                      <v-tooltip right>
-                        <v-btn
-                          slot="activator"
-                          @click="releaseDevice(props.item._id)"
-                          icon
-                          flat
-                          color="error"
-                        >
-                          <v-icon>clear</v-icon>
-                        </v-btn>
-                        <span>移出本层</span>
-                      </v-tooltip>
-                    </td>
+                    <td class="text-xs-center">{{ props.item.node_id }}</td>
+                    <td class="text-xs-center">{{ props.item.node_type }}</td>
+                    <td class="text-xs-center">{{ props.item.gis}}</td>
                   </template>
                 </v-data-table>
               </v-card>
@@ -79,16 +52,7 @@
             <v-flex xs12>
               <v-card>
                 <v-layout justify-center>
-                  <v-flex xs12 md8>
-                    <v-btn
-                      :disabled="storey.floor != floorNum"
-                      block
-                      round
-                      color="error darken-1"
-                      depressed
-                      @click="deleteStorey"
-                    >删除本层</v-btn>
-                  </v-flex>
+                  <v-flex xs12 md8></v-flex>
                 </v-layout>
               </v-card>
             </v-flex>
@@ -96,101 +60,6 @@
         </v-tab-item>
       </v-tabs-items>
     </v-container>
-    <v-dialog v-model="deviceDialog" scrollable persistent max-width="1000px">
-      <v-card>
-        <v-container grid-list-md>
-          <v-layout>
-            <v-flex xs6 d-flex>
-              <v-card>
-                <v-card-title class="dim-headline">本层设备</v-card-title>
-                <v-data-table
-                  no-data-text="暂无数据"
-                  hide-actions
-                  :headers="unGroupHeader"
-                  :items="deviceListShow"
-                >
-                  <template slot="items" slot-scope="props">
-                    <td class="text-xs-center">{{ props.item.name }}</td>
-                    <td class="text-xs-center">{{ props.item.type }}</td>
-                    <td class="text-xs-center">
-                      <v-tooltip right>
-                        <v-btn
-                          slot="activator"
-                          icon
-                          flat
-                          color="error"
-                          @click="releaseDevice(props.item._id)"
-                        >
-                          <v-icon>clear</v-icon>
-                        </v-btn>
-                        <span>移出本层</span>
-                      </v-tooltip>
-                    </td>
-                  </template>
-                </v-data-table>
-              </v-card>
-            </v-flex>
-            <v-flex xs6 d-flex>
-              <v-card dark color="primary">
-                <v-card-title class="dim-headline">设备仓库</v-card-title>
-                <v-data-table
-                  no-data-text="暂无数据"
-                  hide-actions
-                  :headers="unGroupHeader"
-                  :items="deviceListUngroup"
-                >
-                  <template slot="items" slot-scope="props">
-                    <td class="text-xs-center">{{ props.item.name }}</td>
-                    <td class="text-xs-center">{{ props.item.type }}</td>
-                    <td class="text-xs-center">
-                      <v-tooltip right>
-                        <v-btn slot="activator" icon flat @click="bindDevice(props.item._id)">
-                          <v-icon>add</v-icon>
-                        </v-btn>
-                        <span>移入本层</span>
-                      </v-tooltip>
-                    </td>
-                  </template>
-                </v-data-table>
-              </v-card>
-            </v-flex>
-          </v-layout>
-        </v-container>
-        <v-card-actions>
-          <v-layout align-center justify-center>
-            <v-btn color="primary" round flat @click="deviceDialog = false">完成</v-btn>
-          </v-layout>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <v-dialog v-model="coordinateDialog" width="300">
-      <v-card>
-        <v-card-title class="dim-headline">编辑经纬度</v-card-title>
-        <v-container>
-          <v-form ref="coordinateForm">
-            <v-text-field
-              v-model="currentDevice.lng"
-              :rules="[v => !!v || '请填写经度']"
-              required
-              label="经度"
-            ></v-text-field>
-            <v-text-field
-              v-model="currentDevice.lat"
-              :rules="[v => !!v || '请填写纬度']"
-              required
-              label="纬度"
-            ></v-text-field>
-          </v-form>
-          <small>含*为必填项</small>
-        </v-container>
-        <v-card-actions>
-          <v-layout align-center justify-center>
-            <v-btn round flat @click="coordinateDialog = false">取消</v-btn>
-            <v-btn color="primary" round flat @click="updateDeviceCoordinate()">完成</v-btn>
-          </v-layout>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </div>
 </template>
 
@@ -212,6 +81,7 @@ export default {
       currentDevice: {
         coordinate: []
       },
+      nodeList: [],
       deviceListHeader: [
         {
           text: "名称",
@@ -225,28 +95,6 @@ export default {
         },
         {
           text: "坐标",
-          align: "center",
-          sortable: false
-        },
-        {
-          text: "操作",
-          align: "center",
-          sortable: false
-        }
-      ],
-      unGroupHeader: [
-        {
-          text: "名称",
-          align: "center",
-          sortable: false
-        },
-        {
-          text: "类型",
-          align: "center",
-          sortable: false
-        },
-        {
-          text: "操作",
           align: "center",
           sortable: false
         }
@@ -273,63 +121,11 @@ export default {
       });
       this.floorNum = Math.max(...floorArr);
     },
-    async getDeviceList() {
-      this.deviceListShow = [];
-      this.deviceListUngroup = [];
-      this.deviceList.forEach(element => {
-        if (
-          element.block == this.block._id &&
-          element.storey == this.storey._id
-        ) {
-          this.deviceListShow.push(element);
-        }
-        if (!element.block && !element.storey) {
-          this.deviceListUngroup.push(element);
-        }
-      });
-    },
-    async bindDevice(id) {
-      await deviceService.updateDevice({
-        deviceId: id,
-        storeyId: this.storey._id,
-        blockId: this.block._id
-      });
-      await this.getDeviceList();
-    },
-    async releaseDevice(id) {
-      await deviceService.updateDevice({
-        deviceId: id,
-        storeyId: null,
-        blockId: null
-      });
-      await this.getDeviceList();
-    },
-    async deleteStorey() {
-      try {
-        await this.$confirm("确认删除吗？", "本操作无法恢复。");
-        await buildingService.deleteStorey(this.storey._id);
-        await this.getBuildingInfo();
-        this.$emit("getstoreylistshow");
-        this.$router.push({ path: "/building/" + this.block._id });
-      } catch (err) {
-        err;
-      }
-    },
-    async updateDeviceCoordinate() {
-      if (this.$refs.coordinateForm.validate()) {
-        try {
-          await deviceService.updateDevice({
-            deviceId: this.currentDevice._id,
-            coordinate: [this.currentDevice.lng, this.currentDevice.lat]
-          });
-          await deviceService.getDevice();
-          this.getDeviceList();
-
-          this.coordinateDialog = false;
-        } catch (err) {
-          err;
-        }
-      }
+    async getNodeList() {
+      const rsp = await deviceService.getNodeWithFloor(
+        this.$route.params.storeyId
+      );
+      this.nodeList = rsp.data.nodeList;
     }
   },
   computed: {
@@ -341,12 +137,12 @@ export default {
   },
   async mounted() {
     await this.getBuildingInfo();
-    await this.getDeviceList();
+    await this.getNodeList();
   },
   async beforeRouteUpdate(to, from, next) {
     next();
     await this.getBuildingInfo();
-    await this.getDeviceList();
+    await this.getNodeList();
   }
 };
 </script>

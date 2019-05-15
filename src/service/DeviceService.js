@@ -23,6 +23,20 @@ class deviceService {
     return rspData;
   }
 
+  static async getNodeWithFloor(floor) {
+    const rspData = await basicService.getRequest("/node", {
+      floor: floor
+    });
+    return rspData;
+  }
+
+  static async getNodeInfo(node_id) {
+    const rspData = await basicService.getRequest("/node", {
+      node_id: node_id
+    });
+    return rspData;
+  }
+
   static async createDevice(device) {
     const rspData = await basicService.postRequest("/gateway", device);
     await this.getDevice();
