@@ -113,7 +113,7 @@
                 >
                   <v-icon>settings</v-icon>
                 </v-btn>
-                <v-btn flat icon color="error" @click="deleteNode(props.item.nodeAddr)">
+                <v-btn flat icon color="error" @click="deleteNode(props.item.node_id)">
                   <v-icon>delete</v-icon>
                 </v-btn>
               </td>
@@ -317,7 +317,7 @@ export default {
         })
       );
     },
-    async deleteNode(nodeAddr) {
+    async deleteNode(node_id) {
       try {
         await this.$confirm("确认删除吗？", "本操作无法恢复。");
         const rsp = await gatewayService.pushSetting(
@@ -326,7 +326,7 @@ export default {
             state: "02",
             loraAddr: this.$route.params.loraAddr,
             number: 1,
-            node_list: [nodeAddr]
+            node_list: [node_id]
           })
         );
       } catch (err) {
