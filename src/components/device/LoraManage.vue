@@ -1,10 +1,19 @@
 <template>
   <v-container grid-list-lg>
-    <v-layout row wrap>
+    <v-layout
+      row
+      wrap
+    >
       <v-flex xs12>
         <v-card>
           <v-card-title class="subheading">
-            <v-btn flat small round color="primary" @click="goBack">
+            <v-btn
+              flat
+              small
+              round
+              color="primary"
+              @click="goBack"
+            >
               <v-icon>arrow_back</v-icon>&nbsp;返回上一级
             </v-btn>
             <v-spacer></v-spacer>
@@ -16,7 +25,12 @@
           <v-card-title class="dim-headline">
             基本参数
             <v-spacer></v-spacer>
-            <v-btn round flat color="primary" @click="updateLoraConf()">
+            <v-btn
+              round
+              flat
+              color="primary"
+              @click="updateLoraConf()"
+            >
               <v-icon>save</v-icon>&nbsp;保存
             </v-btn>
           </v-card-title>
@@ -45,17 +59,30 @@
                 required
               ></v-text-field>
 
-              <v-text-field label="端口*" :rules="[v => !!v || '请填写名称']" v-model="lora.port" required></v-text-field>
+              <v-text-field
+                label="端口*"
+                :rules="[v => !!v || '请填写名称']"
+                v-model="lora.port"
+                required
+              ></v-text-field>
             </v-form>
           </v-container>
         </v-card>
       </v-flex>
-      <v-flex xs6 d-flex>
+      <v-flex
+        xs6
+        d-flex
+      >
         <v-card>
           <v-card-title class="dim-headline">
             附加参数
             <v-spacer></v-spacer>
-            <v-btn round flat color="primary" @click="updateLoraHeartConf()">
+            <v-btn
+              round
+              flat
+              color="primary"
+              @click="updateLoraHeartConf()"
+            >
               <v-icon>save</v-icon>&nbsp;保存
             </v-btn>
           </v-card-title>
@@ -68,7 +95,12 @@
                 required
               ></v-text-field>
             </v-form>
-            <v-btn round flat color="primary" @click="checkTime">校准时间</v-btn>
+            <v-btn
+              round
+              flat
+              color="primary"
+              @click="checkTime"
+            >校准时间</v-btn>
           </v-container>
         </v-card>
       </v-flex>
@@ -77,10 +109,20 @@
           <v-card-title class="dim-headline">
             节点列表
             <v-spacer></v-spacer>
-            <v-btn flat round color="primary" @click="createNodeDialog=true">
+            <v-btn
+              flat
+              round
+              color="primary"
+              @click="createNodeDialog=true"
+            >
               <v-icon>add</v-icon>新增
             </v-btn>
-            <v-btn flat round color="primary" @click="getNodeList">
+            <v-btn
+              flat
+              round
+              color="primary"
+              @click="getNodeList"
+            >
               <v-icon>refresh</v-icon>刷新
             </v-btn>
           </v-card-title>
@@ -94,8 +136,15 @@
             :items="nodeList"
             :loading="loading"
           >
-            <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
-            <template slot="items" slot-scope="props">
+            <v-progress-linear
+              slot="progress"
+              color="blue"
+              indeterminate
+            ></v-progress-linear>
+            <template
+              slot="items"
+              slot-scope="props"
+            >
               <td class="text-xs-center">{{ props.item.node_id }}</td>
               <td class="text-xs-center">{{ props.item.reportFrequency }}</td>
               <td class="text-xs-center">{{ props.item.calibrationValue }}</td>
@@ -113,17 +162,29 @@
                 >
                   <v-icon>settings</v-icon>
                 </v-btn>
-                <v-btn flat icon color="error" @click="deleteNode(props.item.node_id)">
+                <v-btn
+                  flat
+                  icon
+                  color="error"
+                  @click="deleteNode(props.item.node_id)"
+                >
                   <v-icon>delete</v-icon>
                 </v-btn>
               </td>
             </template>
-            <template slot="pageText" slot-scope="props">共 {{ props.itemsLength }} 项</template>
+            <template
+              slot="pageText"
+              slot-scope="props"
+            >共 {{ props.itemsLength }} 项</template>
           </v-data-table>
         </v-card>
       </v-flex>
     </v-layout>
-    <v-dialog v-model="createNodeDialog" persistent max-width="400px">
+    <v-dialog
+      v-model="createNodeDialog"
+      persistent
+      max-width="400px"
+    >
       <v-card>
         <v-card-title>
           <span class="dim-headline">创建节点</span>
@@ -140,7 +201,7 @@
                     required
                   ></v-text-field>
                   <v-select
-                    :items="node_type"
+                    :items="nodeType"
                     required
                     item-text="label"
                     item-value="value"
@@ -156,9 +217,21 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-layout align-center justify-center>
-            <v-btn round flat @click="createNodeDialog = false">取消</v-btn>
-            <v-btn round color="primary" flat @click="createNode">确认</v-btn>
+          <v-layout
+            align-center
+            justify-center
+          >
+            <v-btn
+              round
+              flat
+              @click="createNodeDialog = false"
+            >取消</v-btn>
+            <v-btn
+              round
+              color="primary"
+              flat
+              @click="createNode"
+            >确认</v-btn>
           </v-layout>
         </v-card-actions>
       </v-card>
@@ -169,6 +242,7 @@
 <script>
 import deviceService from "../../service/DeviceService";
 import gatewayService from "../../service/GatewayService";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -198,8 +272,6 @@ export default {
           gis_type: ""
         }
       },
-
-      node_type: [{ value: "01", label: "水压" }],
       reportFrequency: ["0", "1", "2", "3"],
       nodeHeader: [
         {
@@ -333,6 +405,11 @@ export default {
         return err;
       }
     }
+  },
+  computed: {
+    ...mapGetters({
+      nodeType: "device/nodeType"
+    })
   },
   mounted() {
     this.getNodeList();

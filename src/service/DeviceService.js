@@ -37,6 +37,13 @@ class deviceService {
     return rspData;
   }
 
+  static async getNodeData(node_id){
+    const rspData = await basicService.getRequest("/node/data", {
+      node_id: node_id
+    });
+    return rspData;
+  }
+
   static async createDevice(device) {
     const rspData = await basicService.postRequest("/gateway", device);
     await this.getDevice();
