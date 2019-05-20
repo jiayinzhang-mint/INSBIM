@@ -109,7 +109,7 @@
                 label="楼层"
                 v-model="nodeConf.floor"
               ></v-select>
-              <v-text-field label="经度" v-model="nodeConf.gis.lng"></v-text-field>
+              <v-text-field label="经度" v-model="nodeConf.gis.lon"></v-text-field>
               <v-text-field label="纬度" v-model="nodeConf.gis.lat"></v-text-field>
               <v-text-field label="高度" v-model="nodeConf.gis.alt"></v-text-field>
               <v-text-field label="GIS类型" v-model="nodeConf.gis.gis_type"></v-text-field>
