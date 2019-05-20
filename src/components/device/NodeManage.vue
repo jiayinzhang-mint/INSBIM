@@ -1,19 +1,10 @@
 <template>
   <v-container grid-list-lg>
-    <v-layout
-      row
-      wrap
-    >
+    <v-layout row wrap>
       <v-flex xs12>
         <v-card>
           <v-card-title class="subheading">
-            <v-btn
-              flat
-              small
-              round
-              color="primary"
-              @click="goBack"
-            >
+            <v-btn flat small round color="primary" @click="goBack">
               <v-icon>arrow_back</v-icon>&nbsp;返回上一级
             </v-btn>
             <v-spacer></v-spacer>
@@ -25,12 +16,7 @@
           <v-card-title class="dim-headline">
             基本参数
             <v-spacer></v-spacer>
-            <v-btn
-              round
-              flat
-              color="primary"
-              @click="updateNode()"
-            >
+            <v-btn round flat color="primary" @click="updateNode()">
               <v-icon>save</v-icon>&nbsp;保存
             </v-btn>
           </v-card-title>
@@ -95,29 +81,18 @@
           </v-container>
         </v-card>
       </v-flex>
-      <v-flex
-        xs6
-        d-flex
-      >
+      <v-flex xs6 d-flex>
         <v-card>
           <v-card-title class="dim-headline">
             位置参数
             <v-spacer></v-spacer>
-            <v-btn
-              round
-              flat
-              color="primary"
-              @click="updateNodeInfo()"
-            >
+            <v-btn round flat color="primary" @click="updateNodeInfo()">
               <v-icon>save</v-icon>&nbsp;保存
             </v-btn>
           </v-card-title>
           <v-container>
             <v-form ref="updateNodeInfoForm">
-              <v-text-field
-                label="厂商"
-                v-model="nodeConf.company"
-              ></v-text-field>
+              <v-text-field label="厂商" v-model="nodeConf.company"></v-text-field>
               <v-select
                 :items="blockList"
                 no-data-text="楼宇"
@@ -134,31 +109,17 @@
                 label="楼层"
                 v-model="nodeConf.floor"
               ></v-select>
-              <v-text-field
-                label="经度"
-                v-model="nodeConf.gis.lng"
-              ></v-text-field>
-              <v-text-field
-                label="纬度"
-                v-model="nodeConf.gis.lat"
-              ></v-text-field>
-              <v-text-field
-                label="高度"
-                v-model="nodeConf.gis.alt"
-              ></v-text-field>
-              <v-text-field
-                label="GIS类型"
-                v-model="nodeConf.gis.gis_type"
-              ></v-text-field>
+              <v-text-field label="经度" v-model="nodeConf.gis.lng"></v-text-field>
+              <v-text-field label="纬度" v-model="nodeConf.gis.lat"></v-text-field>
+              <v-text-field label="高度" v-model="nodeConf.gis.alt"></v-text-field>
+              <v-text-field label="GIS类型" v-model="nodeConf.gis.gis_type"></v-text-field>
             </v-form>
           </v-container>
         </v-card>
       </v-flex>
       <v-flex xs12>
         <v-card>
-          <v-card-title class="dim-headline">
-            数据记录
-          </v-card-title>
+          <v-card-title class="dim-headline">数据记录</v-card-title>
           <v-data-table
             rows-per-page-text="每页项数"
             :rows-per-page-items="rowsPerPageItems"
@@ -169,15 +130,8 @@
             :items="dataList"
             :loading="loading"
           >
-            <v-progress-linear
-              slot="progress"
-              color="blue"
-              indeterminate
-            ></v-progress-linear>
-            <template
-              slot="items"
-              slot-scope="props"
-            >
+            <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+            <template slot="items" slot-scope="props">
               <td class="text-xs-center">{{ props.item[0] }}</td>
               <td class="text-xs-center">{{ props.item[1] }}</td>
               <td class="text-xs-center">{{ props.item[2] }}</td>
@@ -185,14 +139,9 @@
               <td class="text-xs-center">{{ props.item[4] }}</td>
               <td class="text-xs-center">{{ props.item[5] }}</td>
               <td class="text-xs-center">{{ props.item[6] }}</td>
-
             </template>
-            <template
-              slot="pageText"
-              slot-scope="props"
-            >共 {{ props.itemsLength }} 项</template>
+            <template slot="pageText" slot-scope="props">共 {{ props.itemsLength }} 项</template>
           </v-data-table>
-
         </v-card>
       </v-flex>
     </v-layout>
@@ -309,7 +258,20 @@ export default {
     },
     async getNodeData() {
       const rsp = await deviceService.getNodeData(this.$route.params.node_id);
-      this.dataList = rsp.data[0].data_list;
+      var nodeData = rsp.data[0].data_list;
+      if (!nodeData.gis) {
+        nodeData.gis = {
+          lng: "",
+          lat: "",
+          alt: "",
+          gis_type: ""
+        };
+      }
+      this.dataList = nodeData.dataList;
+      this.nodeConf.gis = nodeData.gis;
+      this.nodeConf.building_num = nodeData.building_num;
+      this.nodeConf.floor = nodeData.floor;
+      this.nodeConf.company = nodeData.company;
     },
     async updateNodeInfo() {
       if (this.$refs.updateNodeInfoForm.validate()) {
