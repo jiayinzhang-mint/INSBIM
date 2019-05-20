@@ -358,7 +358,7 @@ export default {
         const rsp = await gatewayService.pushSetting(
           JSON.stringify({
             type: "lora",
-            state: "01",
+            state: "07",
             loraAddr: this.$route.params.loraAddr,
             node_id: this.node.node_id,
             node_type: this.node.node_type
@@ -371,7 +371,7 @@ export default {
       await gatewayService.pushSetting(
         JSON.stringify({
           type: "lora",
-          state: "08",
+          state: "05",
           loraAddr: this.$route.params.loraAddr,
           commType: this.lora.commType,
           serverAddr: this.lora.serverAddr,
@@ -383,7 +383,7 @@ export default {
       await gatewayService.pushSetting(
         JSON.stringify({
           type: "lora",
-          state: "06",
+          state: "03",
           loraAddr: this.$route.params.loraAddr,
           heartCycle: this.lora.heartCycle
         })
@@ -395,7 +395,7 @@ export default {
         const rsp = await gatewayService.pushSetting(
           JSON.stringify({
             type: "lora",
-            state: "02",
+            state: "08",
             loraAddr: this.$route.params.loraAddr,
             number: 1,
             node_list: [node_id]

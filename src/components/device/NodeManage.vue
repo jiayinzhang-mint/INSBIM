@@ -292,7 +292,7 @@ export default {
         const rsp = await gatewayService.pushSetting(
           JSON.stringify({
             type: "lora",
-            state: "04",
+            state: "10",
             loraAddr: this.$route.params.loraAddr,
             node_id: this.$route.params.node_id,
             node_type: this.nodeConf.node_type,
