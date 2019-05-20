@@ -258,7 +258,7 @@ export default {
     },
     async getNodeData() {
       const rsp = await deviceService.getNodeData(this.$route.params.node_id);
-      var nodeData = rsp.data[0].data_list;
+      var nodeData = rsp.data[0]
       if (!nodeData.gis) {
         nodeData.gis = {
           lng: "",
@@ -267,7 +267,7 @@ export default {
           gis_type: ""
         };
       }
-      this.dataList = nodeData.dataList;
+      this.dataList = nodeData.data_list;
       this.nodeConf.gis = nodeData.gis;
       this.nodeConf.building_num = nodeData.building_num;
       this.nodeConf.floor = nodeData.floor;
