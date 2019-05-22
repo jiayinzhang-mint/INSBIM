@@ -144,6 +144,33 @@
           </v-data-table>
         </v-card>
       </v-flex>
+      <v-flex xs12>
+        <v-card>
+          <v-card-title class="dim-headline">告警记录</v-card-title>
+          <v-data-table
+            rows-per-page-text="每页项数"
+            :rows-per-page-items="rowsPerPageItems"
+            :search="search"
+            no-data-text="暂无数据"
+            no-results-text="无结果"
+            :headers="dataHeader"
+            :items="alertList"
+            :loading="loading"
+          >
+            <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+            <template slot="items" slot-scope="props">
+              <td class="text-xs-center">{{ props.item[0] }}</td>
+              <td class="text-xs-center">{{ props.item[1] }}</td>
+              <td class="text-xs-center">{{ props.item[2] }}</td>
+              <td class="text-xs-center">{{ props.item[3] }}</td>
+              <td class="text-xs-center">{{ props.item[4] }}</td>
+              <td class="text-xs-center">{{ props.item[5] }}</td>
+              <td class="text-xs-center">{{ props.item[6] }}</td>
+            </template>
+            <template slot="pageText" slot-scope="props">共 {{ props.itemsLength }} 项</template>
+          </v-data-table>
+        </v-card>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -180,6 +207,7 @@ export default {
       loading: false,
       storeyListShow: [],
       dataList: [],
+      alertList: [],
       dataHeader: [
         {
           text: "时间",
@@ -258,7 +286,7 @@ export default {
     },
     async getNodeData() {
       const rsp = await deviceService.getNodeData(this.$route.params.node_id);
-      var nodeData = rsp.data[0]
+      var nodeData = rsp.data[0];
       if (!nodeData.gis) {
         nodeData.gis = {
           lng: "",
@@ -268,6 +296,7 @@ export default {
         };
       }
       this.dataList = nodeData.data_list;
+      this.alertList = nodeData.alert_list;
       this.nodeConf.gis = nodeData.gis;
       this.nodeConf.building_num = nodeData.building_num;
       this.nodeConf.floor = nodeData.floor;
