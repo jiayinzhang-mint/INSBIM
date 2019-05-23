@@ -30,16 +30,16 @@ class deviceService {
     return rspData;
   }
 
-  static async getNodeInfo(node_id) {
+  static async getNodeInfo(nodeAddr) {
     const rspData = await basicService.getRequest("/node", {
-      node_id: node_id
+      nodeAddr: nodeAddr
     });
     return rspData;
   }
 
-  static async getNodeData(node_id){
+  static async getNodeData(nodeAddr){
     const rspData = await basicService.getRequest("/node/data", {
-      node_id: node_id
+      nodeAddr: nodeAddr
     });
     return rspData;
   }

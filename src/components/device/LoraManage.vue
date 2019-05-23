@@ -145,7 +145,7 @@
               slot="items"
               slot-scope="props"
             >
-              <td class="text-xs-center">{{ props.item.node_id }}</td>
+              <td class="text-xs-center">{{ props.item.nodeAddr }}</td>
               <td class="text-xs-center">{{ props.item.reportFrequency }}</td>
               <td class="text-xs-center">{{ props.item.calibrationValue }}</td>
               <td class="text-xs-center">{{ props.item.voltFrequency }}</td>
@@ -158,7 +158,7 @@
                   flat
                   icon
                   color="primary"
-                  :to="`/device/${props.item.loraAddr}/${props.item.node_id}`"
+                  :to="`/device/${props.item.loraAddr}/${props.item.nodeAddr}`"
                 >
                   <v-icon>settings</v-icon>
                 </v-btn>
@@ -166,7 +166,7 @@
                   flat
                   icon
                   color="error"
-                  @click="deleteNode(props.item.node_id)"
+                  @click="deleteNode(props.item.nodeAddr)"
                 >
                   <v-icon>delete</v-icon>
                 </v-btn>
@@ -197,7 +197,7 @@
                   <v-text-field
                     label="节点地址*"
                     :rules="[v => !!v || '请填写名称']"
-                    v-model="node.node_id"
+                    v-model="node.nodeAddr"
                     required
                   ></v-text-field>
                   <v-select
@@ -260,7 +260,7 @@ export default {
       },
       typeList: [{ label: "UDP", value: 0 }, { label: "TCP", value: 1 }],
       node: {
-        node_id: "",
+        nodeAddr: "",
         building_num: "",
         company: "",
         node_type: "",
@@ -360,7 +360,7 @@ export default {
             type: "lora",
             state: "07",
             loraAddr: this.$route.params.loraAddr,
-            node_id: this.node.node_id,
+            nodeAddr: this.node.nodeAddr,
             node_type: this.node.node_type
           })
         );
@@ -389,7 +389,7 @@ export default {
         })
       );
     },
-    async deleteNode(node_id) {
+    async deleteNode(nodeAddr) {
       try {
         await this.$confirm("确认删除吗？", "本操作无法恢复。");
         const rsp = await gatewayService.pushSetting(
@@ -398,7 +398,7 @@ export default {
             state: "08",
             loraAddr: this.$route.params.loraAddr,
             number: 1,
-            node_list: [node_id]
+            node_list: [nodeAddr]
           })
         );
       } catch (err) {

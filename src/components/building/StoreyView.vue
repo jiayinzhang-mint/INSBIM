@@ -37,7 +37,7 @@
                   :items="nodeList"
                 >
                   <template slot="items" slot-scope="props">
-                    <td class="text-xs-center">{{ props.item.node_id }}</td>
+                    <td class="text-xs-center">{{ props.item.nodeAddr }}</td>
                     <td class="text-xs-center">{{ props.item.node_type }}</td>
                     <td class="text-xs-center">{{ props.item.gis}}</td>
                   </template>

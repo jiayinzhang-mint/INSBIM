@@ -73,7 +73,7 @@ export default new Router({
           component: () => import("./components/device/LoraManage")
         },
         {
-          path: "/device/:loraAddr/:node_id",
+          path: "/device/:loraAddr/:nodeAddr",
           meta: "节点设置",
           component: () => import("./components/device/NodeManage")
         },

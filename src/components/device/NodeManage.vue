@@ -25,7 +25,7 @@
               <v-text-field
                 label="节点地址*"
                 :rules="[v => !!v || '请填写名称']"
-                v-model="nodeConf.node_id"
+                v-model="nodeConf.nodeAddr"
                 required
                 disabled
               ></v-text-field>
@@ -183,7 +183,7 @@ export default {
   data() {
     return {
       nodeConf: {
-        node_id: "",
+        nodeAddr: "",
         node_type: "",
         reportFrequency: "",
         calibrationValue: "",
@@ -252,7 +252,7 @@ export default {
       this.$router.go(-1);
     },
     async getNodeInfo() {
-      const rsp = await deviceService.getNodeInfo(this.$route.params.node_id);
+      const rsp = await deviceService.getNodeInfo(this.$route.params.nodeAddr);
       var nodeConf = rsp.data.nodeList[0];
       if (!nodeConf.gis) {
         nodeConf.gis = {
@@ -271,7 +271,7 @@ export default {
             type: "lora",
             state: "10",
             loraAddr: this.$route.params.loraAddr,
-            node_id: this.$route.params.node_id,
+            nodeAddr: this.$route.params.nodeAddr,
             node_type: this.nodeConf.node_type,
             reportFrequency: this.nodeConf.reportFrequency,
             calibrationValue: this.nodeConf.calibrationValue,
@@ -285,7 +285,7 @@ export default {
       }
     },
     async getNodeData() {
-      const rsp = await deviceService.getNodeData(this.$route.params.node_id);
+      const rsp = await deviceService.getNodeData(this.$route.params.nodeAddr);
       var nodeData = rsp.data[0];
       if (!nodeData.gis) {
         nodeData.gis = {
@@ -309,7 +309,7 @@ export default {
             type: "lora",
             state: "12",
             loraAddr: this.$route.params.loraAddr,
-            node_id: this.$route.params.node_id,
+            nodeAddr: this.$route.params.nodeAddr,
             building_num: this.nodeConf.building_num,
             company: this.nodeConf.company,
             floor: this.nodeConf.floor,
