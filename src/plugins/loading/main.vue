@@ -1,5 +1,14 @@
 <template>
-  <v-progress-linear :indeterminate="true" v-show="x"></v-progress-linear>
+  <v-layout row justify-center>
+    <v-dialog dark v-model="x" hide-overlay persistent width="300">
+      <v-card color="primary">
+        <v-card-text>
+          请稍后
+          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+  </v-layout>
 </template>
 
 <script>
@@ -19,12 +28,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.v-progress-linear {
-  position: absolute;
-  height: 4px !important;
-  margin: 0;
-  z-index: 9999;
-}
-</style>
