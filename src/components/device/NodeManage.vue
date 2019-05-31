@@ -326,7 +326,13 @@ export default {
             building_num: this.nodeConf.building_num,
             company: this.nodeConf.company,
             floor: this.nodeConf.floor,
-            gis: this.nodeConf.gis
+            gis: {
+              lon: this.nodeConf.lon,
+              lat: this.nodeConf.lat,
+              alt: this.nodeConf.alt,
+              gis_type: this.nodeConf.gis_type
+            },
+            note: this.nodeConf.note
           })
         );
         this.updateNodeDialog = false;
