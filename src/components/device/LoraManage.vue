@@ -55,12 +55,13 @@
           <v-card-title class="dim-headline">
             附加参数
             <v-spacer></v-spacer>
-            <v-btn round flat color="primary" @click="updateLoraHeartConf()">
+            <v-btn round flat color="primary" @click="updateLoraInfo()">
               <v-icon>save</v-icon>&nbsp;保存
             </v-btn>
           </v-card-title>
           <v-container>
             <v-form>
+              <v-text-field label="网关备注名称" v-model="lora.note" required></v-text-field>
               <v-text-field
                 label="心跳周期*"
                 :rules="[v => !!v || '请填写名称']"
@@ -306,13 +307,14 @@ export default {
         })
       );
     },
-    async updateLoraHeartConf() {
+    async updateLoraInfo() {
       await gatewayService.pushSetting(
         JSON.stringify({
           type: "lora",
           state: "03",
           loraAddr: this.$route.params.loraAddr,
-          heartCycle: this.lora.heartCycle
+          heartCycle: this.lora.heartCycle,
+          note: parseInt(this.lora.note)
         })
       );
     },

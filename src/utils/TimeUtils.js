@@ -6,7 +6,7 @@ const formatNumber = n => {
 export default {
   data: {},
 
-  formatDateTime: function(val) {
+  formatDateTime: val => {
     if (String(val).length === 10) {
       val = val * 1000;
     }
@@ -29,7 +29,7 @@ export default {
     return "无";
   },
 
-  timeToDate: function(val) {
+  timeToDate: val => {
     //timeStamp 转 Date
     if (String(val).length === 10) {
       return new Date(val * 1000);
@@ -37,7 +37,7 @@ export default {
     return new Date(val);
   },
 
-  formatDayTime: function(val) {
+  formatDayTime: val => {
     if (String(val).length === 10) {
       val = val * 1000;
     }

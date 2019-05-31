@@ -10,6 +10,14 @@ Vue.use(dimUpload);
 
 Vue.config.productionTip = false;
 
+// time format
+Vue.filter("timeFormat", val => {
+  if (String(val).length === 10) {
+    return new Date(val * 1000).toLocaleString();
+  }
+  return new Date(val).toLocaleString();
+});
+
 axios.interceptors.request.use(config => {
   //设置拦截器
   config.headers["Content-Type"] = "application/json;charset=UTF-8";
