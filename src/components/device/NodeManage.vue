@@ -310,6 +310,12 @@ export default {
       this.alertList = nodeData.alert_list.reverse();
       this.nodeConf.building_num = nodeData.building_num;
       console.log(this.nodeConf.building_num);
+      if (this.nodeConf.building_num) {
+        this.storeyListShow = this.storeyList.find(e => {
+          return e.key == this.nodeConf.building_num;
+        });
+        console.log(this.storeyListShow);
+      }
 
       this.nodeConf.floor = nodeData.floor;
       this.nodeConf.company = nodeData.company;

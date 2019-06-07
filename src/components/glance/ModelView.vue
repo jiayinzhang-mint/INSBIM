@@ -91,7 +91,8 @@
 
     <v-dialog v-model="sensorInfoDialog" width="400">
       <v-card>
-        <v-card-title class="font-weight-bold text-uppercase">test
+        <v-card-title class="font-weight-bold text-uppercase">
+          test
           <v-spacer></v-spacer>
           <v-btn icon @click="sensorInfoDialog=false">
             <v-icon>clear</v-icon>
