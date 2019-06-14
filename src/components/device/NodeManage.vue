@@ -54,13 +54,13 @@
                 required
               ></v-text-field>
               <v-text-field
-                label="电量告警频率*"
+                label="电源告警频率*"
                 :rules="[v => !!v || '请填写名称']"
                 v-model="nodeConf.voltFrequency"
                 required
               ></v-text-field>
               <v-text-field
-                label="电压告警频率*"
+                label="水压告警频率*"
                 :rules="[v => !!v || '请填写名称']"
                 v-model="nodeConf.dataFrequency"
                 required
