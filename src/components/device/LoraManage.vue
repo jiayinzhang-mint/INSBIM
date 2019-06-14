@@ -86,8 +86,7 @@
             </v-btn>
           </v-card-title>
           <v-data-table
-            rows-per-page-text="每页项数"
-            :rows-per-page-items="rowsPerPageItems"
+            hide-actions
             :search="search"
             no-data-text="暂无数据"
             no-results-text="无结果"
