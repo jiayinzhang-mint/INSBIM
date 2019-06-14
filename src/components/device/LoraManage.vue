@@ -313,7 +313,7 @@ export default {
           state: "03",
           loraAddr: this.$route.params.loraAddr,
           heartCycle: this.lora.heartCycle,
-          note: parseInt(this.lora.note)
+          note: this.lora.note
         })
       );
     },
