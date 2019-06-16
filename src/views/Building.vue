@@ -1,6 +1,6 @@
 <template>
-  <v-container grid-list-lg>
-    <v-layout>
+  <v-container grid-list-md>
+    <v-layout class="mb-2">
       <v-flex xs12>
         <v-card>
           <v-card-title>

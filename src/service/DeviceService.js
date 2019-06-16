@@ -9,6 +9,10 @@ class deviceService {
     return rspData;
   }
 
+  static async getFrp(){
+    
+  }
+
   static async getDeviceInfo(loraAddr) {
     const rspData = await basicService.getRequest("/lora", {
       loraAddr: loraAddr

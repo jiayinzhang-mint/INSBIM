@@ -1,47 +1,67 @@
 <template>
-  <v-container>
-    <v-card>
-      <v-toolbar class="transparent" flat>
-        <v-text-field v-model="search" append-icon="search" label="搜索" single-line hide-details></v-text-field>
-        <v-spacer></v-spacer>
-        <v-btn flat round color="primary" @click="createDeviceDialog=true">
-          <v-icon>add</v-icon>新增
-        </v-btn>
-        <v-btn flat round color="primary" @click="refreshDevice">
-          <v-icon>refresh</v-icon>刷新
-        </v-btn>
-      </v-toolbar>
-      <v-data-table
-        rows-per-page-text="每页项数"
-        :rows-per-page-items="rowsPerPageItems"
-        :search="search"
-        no-data-text="暂无数据"
-        no-results-text="无结果"
-        :headers="deviceHeader"
-        :items="deviceList"
-        :loading="loading"
-      >
-        <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
-        <template slot="items" slot-scope="props">
-          <td class="text-xs-center">{{ props.item.loraAddr }}</td>
-          <td class="text-xs-center">{{ props.item.serverAddr }}</td>
-          <td class="text-xs-center">{{ props.item.heartCycle }}</td>
-          <td class="text-xs-center">{{ props.item.port }}</td>
-          <td v-if="props.item.commType==1" class="text-xs-center">TCP</td>
-          <td v-else class="text-xs-center">UDP</td>
-          <td class="text-xs-center">
-            <v-btn flat icon color="primary" :to="`/device/${props.item.loraAddr}`">
-              <v-icon>settings</v-icon>
+  <v-container grid-list-md>
+    <v-layout class="mb-2">
+      <v-flex xs12>
+        <v-card>
+          <v-card-title class="subheading">
+            <v-tabs slider-color="yellow" v-model="tab" centered>
+              <v-tabs-slider></v-tabs-slider>
+              <v-tab key="1">网关</v-tab>
+              <v-tab key="2">消防主机</v-tab>
+            </v-tabs>
+          </v-card-title>
+        </v-card>
+      </v-flex>
+    </v-layout>
+    <v-tabs-items v-model="tab">
+      <v-tab-item key="1">
+        <v-card>
+          <v-toolbar class="transparent" flat>
+            <v-text-field v-model="search" append-icon="search" label="搜索" single-line hide-details></v-text-field>
+            <v-spacer></v-spacer>
+            <v-btn flat round color="primary" @click="createDeviceDialog=true">
+              <v-icon>add</v-icon>新增
             </v-btn>
+            <v-btn flat round color="primary" @click="refreshDevice">
+              <v-icon>refresh</v-icon>刷新
+            </v-btn>
+          </v-toolbar>
+          <v-data-table
+            rows-per-page-text="每页项数"
+            :rows-per-page-items="rowsPerPageItems"
+            :search="search"
+            no-data-text="暂无数据"
+            no-results-text="无结果"
+            :headers="deviceHeader"
+            :items="deviceList"
+            :loading="loading"
+          >
+            <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+            <template slot="items" slot-scope="props">
+              <td class="text-xs-center">{{ props.item.loraAddr }}</td>
+              <td class="text-xs-center">{{ props.item.serverAddr }}</td>
+              <td class="text-xs-center">{{ props.item.heartCycle }}</td>
+              <td class="text-xs-center">{{ props.item.port }}</td>
+              <td v-if="props.item.commType==1" class="text-xs-center">TCP</td>
+              <td v-else class="text-xs-center">UDP</td>
+              <td class="text-xs-center">
+                <v-btn flat icon color="primary" :to="`/device/${props.item.loraAddr}`">
+                  <v-icon>settings</v-icon>
+                </v-btn>
 
-            <v-btn flat icon color="error" @click="deleteDevice(props.item.loraAddr)">
-              <v-icon>delete</v-icon>
-            </v-btn>
-          </td>
-        </template>
-        <template slot="pageText" slot-scope="props">共 {{ props.itemsLength }} 项</template>
-      </v-data-table>
-    </v-card>
+                <v-btn flat icon color="error" @click="deleteDevice(props.item.loraAddr)">
+                  <v-icon>delete</v-icon>
+                </v-btn>
+              </td>
+            </template>
+            <template slot="pageText" slot-scope="props">共 {{ props.itemsLength }} 项</template>
+          </v-data-table>
+        </v-card>
+      </v-tab-item>
+      <v-tab-item key="2">
+        
+      </v-tab-item>
+    </v-tabs-items>
 
     <v-dialog v-model="createDeviceDialog" persistent max-width="400px">
       <v-card>
@@ -101,7 +121,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="importDeviceDialog" persistent max-width="400px">
+    <!-- <v-dialog v-model="importDeviceDialog" persistent max-width="400px">
       <v-card>
         <v-card-title>
           <span class="dim-headline">批量导入</span>
@@ -117,7 +137,7 @@
           </v-layout>
         </v-card-actions>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
   </v-container>
 </template>
 
@@ -129,6 +149,7 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
+      tab: 0,
       createDeviceDialog: false,
       importDeviceDialog: false,
       device: {
@@ -230,8 +251,7 @@ export default {
       } catch (err) {
         err;
       }
-    },
-
+    }
   },
   computed: {
     ...mapGetters({
