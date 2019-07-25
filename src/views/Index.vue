@@ -4,7 +4,7 @@
       <v-list>
         <v-list-tile avatar class="pt-3">
           <v-list-tile-avatar>
-            <img src="https://randomuser.me/api/portraits/men/85.jpg">
+            <img src="https://randomuser.me/api/portraits/men/85.jpg" />
           </v-list-tile-avatar>
         </v-list-tile>
         <v-list-tile class="pb-2">
@@ -82,7 +82,7 @@
     </v-toolbar>
 
     <v-content>
-      <router-view/>
+      <router-view />
     </v-content>
   </v-app>
 </template>
@@ -96,28 +96,28 @@ export default {
       drawer: true,
       name: "",
       menu: [
-        { heading: "通用" },
-        {
-          icon: "dashboard",
-          text: "仪表板",
-          route: "/dashboard"
-        },
-        {
-          icon: "inbox",
-          text: "收件箱",
-          route: "/inbox"
-        },
-        { heading: "运行" },
-        {
-          icon: "3d_rotation",
-          text: "3D 概览",
-          route: "/glance"
-        },
-        {
-          icon: "report",
-          text: "分析报告",
-          route: ""
-        },
+        // { heading: "通用" },
+        // {
+        //   icon: "dashboard",
+        //   text: "仪表板",
+        //   route: "/dashboard"
+        // },
+        // {
+        //   icon: "inbox",
+        //   text: "收件箱",
+        //   route: "/inbox"
+        // },
+        // { heading: "运行" },
+        // {
+        //   icon: "3d_rotation",
+        //   text: "3D 概览",
+        //   route: "/glance"
+        // },
+        // {
+        //   icon: "report",
+        //   text: "分析报告",
+        //   route: ""
+        // },
         { heading: "系统" },
         // {
         //   icon: "line_style",
