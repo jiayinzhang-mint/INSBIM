@@ -295,6 +295,7 @@ export default {
     async getNodeData() {
       const rsp = await deviceService.getNodeData(this.$route.params.nodeAddr);
       var nodeData = rsp.data[0];
+console.log(nodeData)
       if (!nodeData.gis) {
         this.nodeConf.lon = "";
         this.nodeConf.lat = "";
@@ -313,7 +314,7 @@ export default {
       if (this.nodeConf.building_num) {
         this.storeyListShow = this.storeyList.find(e => {
           return e.key == this.nodeConf.building_num;
-        });
+        }) || [];
         console.log(this.storeyListShow);
       }
 
@@ -367,6 +368,12 @@ export default {
   async mounted() {
     await this.getNodeInfo();
     this.getNodeData();
+ if (this.nodeConf.building_num) {
+        this.storeyListShow = this.storeyList.find(e => {
+          return e.key == this.nodeConf.building_num;
+        });
+        console.log(this.storeyListShow);
+      }
   }
 };
 </script>

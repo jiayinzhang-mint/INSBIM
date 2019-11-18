@@ -133,17 +133,17 @@ export default {
           icon: "dns",
           text: "设备仓库",
           route: "/device"
-        },
+        }
         // {
         //   icon: "person",
         //   text: "用户管理",
         //   route: "/user"
         // },
-        {
-          icon: "build",
-          text: "系统测试",
-          route: "/test"
-        }
+        //{
+        //  icon: "build",
+        //  text: "系统测试",
+        //  route: "/test"
+        //}
       ],
       userMenu: [
         {

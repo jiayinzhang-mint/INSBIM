@@ -83,7 +83,7 @@ export default {
       await deviceService.getDevice();
       await userService.getUser();
       if (rspData.msg) {
-        this.$router.push({ path: "/test" });
+        this.$router.push({ path: "/device" });
       }
     }
   },

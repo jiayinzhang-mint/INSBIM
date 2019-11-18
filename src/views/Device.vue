@@ -7,7 +7,7 @@
             <v-tabs slider-color="yellow" v-model="tab" centered>
               <v-tabs-slider></v-tabs-slider>
               <v-tab key="1">网关</v-tab>
-              <v-tab key="2">消防主机</v-tab>
+              <!--<v-tab key="2">消防主机</v-tab>-->
             </v-tabs>
           </v-card-title>
         </v-card>
